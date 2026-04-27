@@ -1,1003 +1,600 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>HORÓSCOPO 2026 · Los Astros vs Mi Realidad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CONÓCETE · Los Astros vs Mi Realidad</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;600;700&display=swap');
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family:'Raleway', 'Segoe UI', sans-serif;
-      background: #040d16;
-      min-height:100vh; padding:20px 15px; color:#e8eef8;
-      background-image: radial-gradient(ellipse at 10% 20%, rgba(15,35,60,0.9) 0%, transparent 60%),
-                        radial-gradient(ellipse at 90% 80%, rgba(40,10,60,0.7) 0%, transparent 55%),
-                        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Ccircle cx='50' cy='80' r='1.2' fill='%23ffffff22'/%3E%3Ccircle cx='120' cy='30' r='0.8' fill='%23ffffff33'/%3E%3Ccircle cx='200' cy='120' r='1.5' fill='%23ffffff18'/%3E%3Ccircle cx='310' cy='60' r='1' fill='%23ffffff2a'/%3E%3Ccircle cx='380' cy='150' r='0.7' fill='%23ffffff30'/%3E%3Ccircle cx='70' cy='200' r='1.3' fill='%23ffffff20'/%3E%3Ccircle cx='260' cy='300' r='1' fill='%23ffffff28'/%3E%3Ccircle cx='150' cy='350' r='0.9' fill='%23ffffff22'/%3E%3Ccircle cx='340' cy='380' r='1.4' fill='%23ffffff1a'/%3E%3Ccircle cx='30' cy='330' r='0.8' fill='%23ffffff30'/%3E%3C/svg%3E");
-    }
-    .app-container { max-width:680px; margin:0 auto; }
-    .portada { display:none; }
-    .portada.active { display:block; animation: fadeSlide 0.5s ease; }
-    @keyframes fadeSlide { from{opacity:0; transform:translateY(12px)} to{opacity:1; transform:translateY(0)} }
-
-    /* CARD */
-    .card {
-      background: linear-gradient(135deg, rgba(8,22,38,0.95) 0%, rgba(12,28,48,0.9) 100%);
-      backdrop-filter:blur(12px);
-      border:1px solid rgba(80,130,170,0.35);
-      border-radius:24px; padding:32px 28px;
-      margin-bottom:20px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
-      text-align:center;
-    }
-
-    /* TIPOGRAFÍA */
-    .titulo-app {
-      font-family:'Cinzel', serif;
-      font-size:2.2rem; font-weight:900;
-      color:#ffd966;
-      text-shadow: 0 0 20px rgba(255,210,80,0.4), 0 0 40px rgba(255,200,50,0.2);
-      letter-spacing:2px; margin-bottom:4px;
-    }
-    .subtitulo-app {
-      font-family:'Cinzel', serif;
-      font-size:0.85rem; color:#9b7fe8; letter-spacing:4px; margin-bottom:24px;
-    }
-    h2 {
-      font-family:'Cinzel', serif;
-      color:#ffd966; margin-bottom:18px; font-size:1.4rem; letter-spacing:1px;
-    }
-    h3 { color:#c9d8f0; font-size:1.1rem; margin-bottom:10px; }
-    p { line-height:1.75; color:#c5d3e8; }
-
-    /* INPUTS */
-    label { display:block; margin:14px 0 5px; color:#ffd966; font-weight:600; font-size:0.9rem; letter-spacing:1px; text-align:left; }
-    input, select {
-      width:100%; padding:13px 18px; border-radius:12px; border:1px solid #2e5a7a;
-      background:rgba(20,45,70,0.8); color:white; font-weight:600;
-      font-size:1rem; margin-bottom:8px; font-family:'Raleway', sans-serif;
-    }
-    input:focus, select:focus { outline:none; border-color:#ffd966; }
-    select option { background:#0a1c2c; }
-
-    /* BOTONES */
-    .gold-btn {
-      background: linear-gradient(145deg, #f0c040, #c08800);
-      border:none; padding:14px 30px; border-radius:10px;
-      font-weight:700; font-size:1rem; color:#0a1820;
-      box-shadow: 0 4px 0 #7a5200, 0 5px 18px rgba(0,0,0,0.5);
-      cursor:pointer; border:1px solid #ffe080;
-      transition:all 0.15s; margin:6px 4px;
-      font-family:'Raleway', sans-serif; letter-spacing:0.5px;
-    }
-    .gold-btn:hover { transform:translateY(-1px); box-shadow:0 5px 0 #7a5200, 0 8px 20px rgba(0,0,0,0.5); }
-    .gold-btn:active { transform:translateY(2px); box-shadow:0 2px 0 #7a5200; }
-    .gold-btn:disabled { background:linear-gradient(145deg,#556,#334); color:#889; border-color:#556; box-shadow:none; cursor:not-allowed; }
-    .ghost-btn {
-      background:transparent; border:1px solid #2e5a7a; padding:14px 28px;
-      border-radius:10px; font-weight:600; font-size:0.95rem; color:#8ab4cc;
-      cursor:pointer; margin:6px 4px; transition:all 0.15s;
-      font-family:'Raleway', sans-serif;
-    }
-    .ghost-btn:hover { border-color:#5a8aaa; color:#c9d8f0; }
-    .nav-btns { display:flex; justify-content:center; gap:12px; margin-top:28px; flex-wrap:wrap; }
-
-    /* BARRA DE PROGRESO */
-    .progress-bar-wrap { margin:0 0 24px 0; }
-    .progress-label { font-size:0.75rem; color:#7aa3bf; letter-spacing:2px; margin-bottom:6px; text-align:left; }
-    .progress-track { background:rgba(30,60,90,0.5); border-radius:6px; height:5px; }
-    .progress-fill { height:5px; border-radius:6px; background:linear-gradient(90deg,#a855f7,#ffd966); transition:width 0.4s ease; }
-
-    /* ESFERAS (TARJETAS) */
-    .esferas-grid { display:flex; flex-direction:column; gap:10px; margin:20px 0; }
-    .esfera {
-      background:rgba(14,32,52,0.75); border-radius:12px; padding:14px 18px;
-      cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(46,90,122,0.6);
-      display:flex; align-items:center; gap:16px; text-align:left;
-      position:relative; overflow:hidden;
-    }
-    .esfera::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:#2e5a7a; transition:background 0.2s; border-radius:3px 0 0 3px; }
-    .esfera:hover { background:rgba(25,55,85,0.85); border-color:#5a8aaa; transform:translateX(4px); }
-    .esfera.selected { border-color:rgba(255,215,100,0.5); background:rgba(25,55,85,0.9); }
-    .esfera.selected::before { background:#ffd966; }
-    .esfera-icono { font-size:1.5rem; flex-shrink:0; width:36px; text-align:center; }
-    .esfera-info { flex:1; }
-    .esfera-titulo { font-weight:700; font-size:0.95rem; color:#e0eaf8; }
-    .esfera-estado { font-size:0.75rem; color:#5a8aaa; margin-top:2px; }
-    .esfera.selected .esfera-estado { color:#ffd966; }
-    .esfera-check { font-size:1rem; color:#ffd966; opacity:0; transition:opacity 0.2s; margin-left:auto; }
-    .esfera.selected .esfera-check { opacity:1; }
-
-    /* PREGUNTAS */
-    .pregunta-box { margin:22px 0; text-align:left; }
-    .pregunta-texto { font-weight:700; font-size:1rem; color:#e8eef8; margin-bottom:12px; line-height:1.5; }
-    .opcion {
-      background:rgba(14,35,58,0.6); border-radius:10px; padding:13px 16px;
-      margin:7px 0; cursor:pointer; transition:all 0.18s; border:1px solid rgba(46,90,122,0.5);
-      display:flex; align-items:center; gap:14px; color:#c5d3e8;
-    }
-    .opcion:hover { background:rgba(25,55,85,0.8); border-color:#5a8aaa; }
-    .opcion.selected { border-color:#ffd966; background:rgba(30,65,95,0.9); color:#fff; }
-    .opcion-letra { width:28px; height:28px; border-radius:50%; background:rgba(46,90,122,0.5); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.8rem; flex-shrink:0; color:#8ab4cc; transition:all 0.18s; }
-    .opcion.selected .opcion-letra { background:#ffd966; color:#0a1820; }
-
-    /* SIGNO */
-    .signo-emblema { font-size:5rem; margin:10px 0; display:block; filter:drop-shadow(0 0 20px rgba(255,215,100,0.4)); }
-    .signo-nombre { font-family:'Cinzel', serif; font-size:2rem; color:#ffd966; font-weight:700; }
-    .signo-elemento { font-size:0.9rem; color:#a855f7; letter-spacing:3px; margin:6px 0 18px; }
-    .prediccion-box { background:rgba(30,15,50,0.5); border:1px solid rgba(168,85,247,0.3); border-radius:14px; padding:20px; margin:16px 0; text-align:left; }
-    .prediccion-box p { color:#d4bff5; line-height:1.8; }
-
-    /* ASTROS VS PSICOLOGÍA */
-    .dos-columnas { display:flex; gap:0; margin:20px 0; align-items:stretch; }
-    .col-astral { flex:1; padding:0 18px 0 0; }
-    .col-psico { flex:1; padding:0 0 0 18px; }
-    .divider-vert { width:1px; background:linear-gradient(to bottom, transparent, #2e5a7a, #a855f7, #2e5a7a, transparent); flex-shrink:0; }
-    .col-titulo { font-family:'Cinzel', serif; font-size:1rem; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid; display:flex; align-items:center; gap:8px; }
-    .col-titulo.astral { color:#ffd966; border-color:rgba(255,215,100,0.3); }
-    .col-titulo.psico { color:#a855f7; border-color:rgba(168,85,247,0.3); }
-    .elemento-item {
-      display:flex; align-items:flex-start; gap:10px;
-      padding:8px 0; border-bottom:1px solid rgba(46,90,122,0.2);
-      font-size:0.88rem; line-height:1.4;
-    }
-    .elemento-item:last-child { border-bottom:none; }
-    .elemento-dot-astral { width:6px; height:6px; border-radius:50%; background:#ffd966; margin-top:6px; flex-shrink:0; }
-    .elemento-dot-psico { width:6px; height:6px; border-radius:50%; background:#a855f7; margin-top:6px; flex-shrink:0; }
-    .elemento-label { font-size:0.7rem; color:#7aa3bf; letter-spacing:1px; display:block; margin-bottom:2px; }
-    .elemento-valor { color:#c9d8f0; font-weight:600; }
-
-    /* CÓMO SE RELACIONAN */
-    .conexion-wrap { margin:20px 0; }
-    .arco-item {
-      display:flex; gap:16px; align-items:flex-start;
-      background:rgba(14,32,52,0.6); border-radius:12px;
-      padding:16px; margin:10px 0;
-      border-left:3px solid #a855f7;
-      text-align:left;
-    }
-    .arco-icono { font-size:1.8rem; flex-shrink:0; margin-top:2px; }
-    .arco-titulo { font-weight:700; font-size:0.95rem; color:#ffd966; margin-bottom:4px; }
-    .arco-texto { font-size:0.88rem; color:#b0c4d8; line-height:1.6; }
-    .sincronias-titulo { font-family:'Cinzel', serif; font-size:1rem; color:#a855f7; letter-spacing:2px; margin:24px 0 12px; }
-
-    /* PERFIL INTEGRADOR */
-    .perfil-bloque { background:rgba(14,32,52,0.6); border-radius:12px; padding:18px; margin:12px 0; text-align:left; border:1px solid rgba(46,90,122,0.4); }
-    .perfil-bloque-titulo { font-size:0.75rem; color:#7aa3bf; letter-spacing:2px; margin-bottom:8px; }
-    .perfil-bloque-texto { font-size:0.95rem; color:#d0ddf0; line-height:1.7; }
-    .perfil-rasgos { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-    .rasgo-tag { background:rgba(168,85,247,0.15); border:1px solid rgba(168,85,247,0.35); border-radius:20px; padding:4px 14px; font-size:0.8rem; color:#c9a8f0; }
-
-    /* AGRADECIMIENTO */
-    .gracias-estrella { font-size:4rem; margin:10px 0; display:block; }
-    .gracias-frase { font-family:'Cinzel', serif; font-size:1.1rem; color:#ffd966; letter-spacing:1px; margin:16px 0 8px; }
-    .gracias-sub { font-size:0.9rem; color:#8ab4cc; line-height:1.7; }
-    .firma { font-family:'Cinzel', serif; font-size:0.8rem; color:#5a8aaa; letter-spacing:3px; margin-top:28px; }
-
-    /* REFLEXIVO */
-    .reflexivo {
-      background:rgba(30,64,91,0.3); border-left:3px solid #a855f7;
-      border-radius:10px; padding:18px; margin:20px 0; text-align:left;
-      font-style:italic; color:#b8cce0; line-height:1.8; font-size:0.95rem;
-    }
-
-    /* STEP INDICATOR */
-    .steps { display:flex; justify-content:center; gap:6px; margin-bottom:20px; }
-    .step-dot { width:8px; height:8px; border-radius:50%; background:rgba(46,90,122,0.5); transition:all 0.3s; }
-    .step-dot.active { background:#ffd966; box-shadow:0 0 8px rgba(255,215,100,0.5); width:24px; border-radius:4px; }
-    .step-dot.done { background:#a855f7; }
-
-    @media(max-width:500px) {
-      .dos-columnas { flex-direction:column; gap:20px; }
-      .divider-vert { width:100%; height:1px; background:linear-gradient(to right, transparent, #2e5a7a, #a855f7, #2e5a7a, transparent); }
-      .col-astral { padding:0 0 20px 0; }
-      .col-psico { padding:20px 0 0 0; }
-      .titulo-app { font-size:1.7rem; }
-    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Raleway','Segoe UI',sans-serif;background:#040d16;min-height:100vh;padding:20px 15px;color:#e8eef8;
+      background-image:radial-gradient(ellipse at 10% 20%,rgba(15,35,60,.9) 0%,transparent 60%),radial-gradient(ellipse at 90% 80%,rgba(40,10,60,.7) 0%,transparent 55%);}
+    .app{max-width:680px;margin:0 auto;}
+    .pant{display:none;} .pant.active{display:block;animation:fadeIn .45s ease;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .card{background:linear-gradient(135deg,rgba(8,22,38,.96),rgba(12,28,50,.92));border:1px solid rgba(80,130,170,.3);border-radius:24px;padding:30px 26px;margin-bottom:20px;box-shadow:0 20px 50px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.05);text-align:center;}
+    .titulo-app{font-family:'Cinzel',serif;font-size:2rem;font-weight:900;color:#ffd966;text-shadow:0 0 20px rgba(255,210,80,.4);letter-spacing:2px;margin-bottom:4px;}
+    .sub-app{font-family:'Cinzel',serif;font-size:.78rem;color:#9b7fe8;letter-spacing:4px;margin-bottom:22px;}
+    h2{font-family:'Cinzel',serif;color:#ffd966;margin-bottom:16px;font-size:1.3rem;letter-spacing:1px;}
+    p{line-height:1.8;color:#c5d3e8;} .nota{font-size:.8rem;color:#7aa3bf;margin-bottom:14px;line-height:1.6;}
+    label{display:block;margin:12px 0 4px;color:#ffd966;font-weight:600;font-size:.82rem;letter-spacing:1px;text-align:left;}
+    input,select{width:100%;padding:12px 15px;border-radius:10px;border:1px solid #2e5a7a;background:rgba(20,45,70,.85);color:#fff;font-weight:600;font-size:.95rem;margin-bottom:6px;font-family:'Raleway',sans-serif;}
+    input:focus,select:focus{outline:none;border-color:#ffd966;} select option{background:#0a1c2c;}
+    .gold-btn{background:linear-gradient(145deg,#f0c040,#c08800);border:1px solid #ffe080;padding:13px 28px;border-radius:10px;font-weight:700;font-size:.95rem;color:#0a1820;box-shadow:0 4px 0 #7a5200,0 5px 16px rgba(0,0,0,.5);cursor:pointer;transition:all .15s;margin:5px 4px;font-family:'Raleway',sans-serif;}
+    .gold-btn:hover{transform:translateY(-1px);} .gold-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a5200;}
+    .gold-btn:disabled{background:linear-gradient(145deg,#445,#223);color:#778;border-color:#445;box-shadow:none;cursor:not-allowed;}
+    .ghost-btn{background:transparent;border:1px solid #2e5a7a;padding:13px 26px;border-radius:10px;font-weight:600;font-size:.9rem;color:#7aa3bf;cursor:pointer;margin:5px 4px;transition:all .15s;font-family:'Raleway',sans-serif;}
+    .ghost-btn:hover{border-color:#5a8aaa;color:#c9d8f0;}
+    .nav-btns{display:flex;justify-content:center;gap:10px;margin-top:26px;flex-wrap:wrap;}
+    .prog-wrap{margin:0 0 18px;} .prog-label{font-size:.72rem;color:#7aa3bf;letter-spacing:2px;margin-bottom:5px;text-align:left;}
+    .prog-track{background:rgba(30,60,90,.5);border-radius:6px;height:4px;} .prog-fill{height:4px;border-radius:6px;background:linear-gradient(90deg,#a855f7,#ffd966);transition:width .4s;}
+    .steps{display:flex;justify-content:center;gap:5px;margin-bottom:16px;}
+    .dot{width:7px;height:7px;border-radius:50%;background:rgba(46,90,122,.5);transition:all .3s;}
+    .dot.active{background:#ffd966;box-shadow:0 0 7px rgba(255,215,100,.5);width:22px;border-radius:4px;} .dot.done{background:#a855f7;}
+    .esferas-grid{display:flex;flex-direction:column;gap:9px;margin:16px 0;}
+    .esfera{background:rgba(14,32,52,.75);border-radius:11px;padding:13px 16px;cursor:pointer;transition:all .2s;border:1px solid rgba(46,90,122,.55);display:flex;align-items:center;gap:14px;text-align:left;position:relative;overflow:hidden;}
+    .esfera::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#2e5a7a;transition:background .2s;border-radius:3px 0 0 3px;}
+    .esfera:hover{background:rgba(25,55,85,.85);border-color:#5a8aaa;transform:translateX(4px);}
+    .esfera.sel{border-color:rgba(255,215,100,.5);background:rgba(25,55,85,.9);} .esfera.sel::before{background:#ffd966;}
+    .esf-ico{font-size:1.4rem;flex-shrink:0;width:34px;text-align:center;} .esf-info{flex:1;}
+    .esf-tit{font-weight:700;font-size:.9rem;color:#e0eaf8;} .esf-st{font-size:.72rem;color:#5a8aaa;margin-top:2px;}
+    .esfera.sel .esf-st{color:#ffd966;} .esf-chk{font-size:.95rem;color:#ffd966;opacity:0;transition:opacity .2s;margin-left:auto;} .esfera.sel .esf-chk{opacity:1;}
+    .preg-box{margin:20px 0;text-align:left;} .preg-txt{font-weight:700;font-size:.95rem;color:#e8eef8;margin-bottom:10px;line-height:1.6;}
+    .opcion{background:rgba(14,35,58,.6);border-radius:9px;padding:12px 14px;margin:6px 0;cursor:pointer;transition:all .18s;border:1px solid rgba(46,90,122,.5);display:flex;align-items:center;gap:12px;color:#c5d3e8;}
+    .opcion:hover{background:rgba(25,55,85,.8);border-color:#5a8aaa;} .opcion.sel{border-color:#ffd966;background:rgba(30,65,95,.9);color:#fff;}
+    .opc-letra{width:26px;height:26px;border-radius:50%;background:rgba(46,90,122,.5);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;flex-shrink:0;color:#8ab4cc;transition:all .18s;} .opcion.sel .opc-letra{background:#ffd966;color:#0a1820;}
+    .signo-emblema{font-size:4.5rem;margin:8px 0;display:block;filter:drop-shadow(0 0 18px rgba(255,215,100,.4));}
+    .signo-nombre{font-family:'Cinzel',serif;font-size:2rem;color:#ffd966;font-weight:700;} .signo-sub{font-size:.82rem;color:#a855f7;letter-spacing:3px;margin:5px 0 16px;}
+    .hora-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.35);border-radius:20px;padding:6px 16px;font-size:.82rem;color:#c9a8f0;margin:8px 0 14px;}
+    .ps{background:rgba(14,32,52,.65);border-radius:12px;padding:18px;margin:12px 0;text-align:left;border:1px solid rgba(46,90,122,.4);}
+    .ps-t{font-size:.7rem;color:#7aa3bf;letter-spacing:2px;margin-bottom:8px;} .ps-x{font-size:.9rem;color:#d0ddf0;line-height:1.75;}
+    .tw{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+    .tag{background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.3);border-radius:20px;padding:3px 12px;font-size:.75rem;color:#c9a8f0;}
+    .tag.g{background:rgba(255,215,100,.1);border-color:rgba(255,215,100,.3);color:#ffd966;}
+    .tag.r{background:rgba(255,80,80,.1);border-color:rgba(255,80,80,.25);color:#f09090;}
+    .ci{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(46,90,122,.2);font-size:.87rem;} .ci:last-child{border-bottom:none;}
+    .cvs{font-size:.7rem;color:#a855f7;font-weight:700;background:rgba(168,85,247,.15);padding:2px 8px;border-radius:10px;flex-shrink:0;}
+    .dos-col{display:flex;gap:0;margin:18px 0;align-items:stretch;}
+    .col-a{flex:1;padding:0 16px 0 0;} .col-b{flex:1;padding:0 0 0 16px;}
+    .div-v{width:1px;background:linear-gradient(to bottom,transparent,#2e5a7a,#a855f7,#2e5a7a,transparent);flex-shrink:0;}
+    .col-t{font-family:'Cinzel',serif;font-size:.9rem;margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid;display:flex;align-items:center;gap:7px;}
+    .col-t.aa{color:#ffd966;border-color:rgba(255,215,100,.3);} .col-t.pp{color:#a855f7;border-color:rgba(168,85,247,.3);}
+    .eli{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid rgba(46,90,122,.15);font-size:.82rem;line-height:1.45;} .eli:last-child{border-bottom:none;}
+    .da{width:5px;height:5px;border-radius:50%;background:#ffd966;margin-top:6px;flex-shrink:0;} .dp{width:5px;height:5px;border-radius:50%;background:#a855f7;margin-top:6px;flex-shrink:0;}
+    .el{font-size:.65rem;color:#7aa3bf;letter-spacing:1px;display:block;margin-bottom:2px;} .ev{color:#c9d8f0;font-weight:600;}
+    .arco{display:flex;gap:14px;align-items:flex-start;background:rgba(14,32,52,.6);border-radius:11px;padding:15px;margin:9px 0;border-left:3px solid #a855f7;text-align:left;}
+    .arco-i{font-size:1.6rem;flex-shrink:0;margin-top:2px;} .arco-t{font-weight:700;font-size:.9rem;color:#ffd966;margin-bottom:4px;} .arco-x{font-size:.83rem;color:#b0c4d8;line-height:1.65;}
+    .reflexivo{background:rgba(30,64,91,.3);border-left:3px solid #a855f7;border-radius:9px;padding:16px;margin:16px 0;text-align:left;font-style:italic;color:#b8cce0;line-height:1.8;font-size:.88rem;}
+    .gracias-ico{font-size:3.5rem;margin:8px 0;display:block;} .gracias-frase{font-family:'Cinzel',serif;font-size:1.1rem;color:#ffd966;letter-spacing:1px;margin:14px 0 8px;}
+    .gracias-sub{font-size:.88rem;color:#8ab4cc;line-height:1.75;} .firma{font-family:'Cinzel',serif;font-size:.72rem;color:#5a8aaa;letter-spacing:3px;margin-top:24px;}
+    @media(max-width:480px){.dos-col{flex-direction:column;gap:18px;}.div-v{width:100%;height:1px;background:linear-gradient(to right,transparent,#2e5a7a,#a855f7,#2e5a7a,transparent);}.col-a{padding:0 0 18px 0;}.col-b{padding:18px 0 0 0;}.titulo-app{font-size:1.7rem;}}
   </style>
 </head>
 <body>
-<div class="app-container">
+<div class="app">
 
-<!-- ═══════════════════════════════════════════
-     PANTALLA 1: PORTADA / INICIO
-═══════════════════════════════════════════ -->
-<div id="p1" class="portada active">
-  <div class="card">
-    <div class="steps" id="steps1"></div>
-    <div style="font-size:3rem;margin-bottom:8px;">🌌</div>
-    <div class="titulo-app">HORÓSCOPO 2026</div>
-    <div class="subtitulo-app">LOS ASTROS VS MI REALIDAD</div>
-    <div class="reflexivo">"¿Qué ocurre cuando el lenguaje del cosmos dialoga con la ciencia de la mente? Dos sistemas distintos, una misma búsqueda: conocerte."</div>
-    <label>📅 Día de nacimiento</label>
-    <input type="number" id="diaNac" placeholder="Escribe tu día (1–31)" min="1" max="31">
-    <label>🗓 Mes de nacimiento</label>
-    <select id="mesNac">
-      <option value="">Selecciona tu mes</option>
-      <option value="1">Enero</option><option value="2">Febrero</option><option value="3">Marzo</option>
-      <option value="4">Abril</option><option value="5">Mayo</option><option value="6">Junio</option>
-      <option value="7">Julio</option><option value="8">Agosto</option><option value="9">Septiembre</option>
-      <option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
-    </select>
-    <label>⚥ Me identifico como</label>
-    <select id="sexo">
-      <option value="">Elige una opción</option>
-      <option value="M">Hombre</option>
-      <option value="F">Mujer</option>
-    </select>
-    <div class="nav-btns">
-      <button class="gold-btn" onclick="comenzar()">✨ COMENZAR MI LECTURA</button>
-    </div>
+<!-- P1: DATOS -->
+<div id="p1" class="pant active"><div class="card">
+  <div class="steps" id="st1"></div>
+  <div style="font-size:2.8rem;margin-bottom:6px;">🌌</div>
+  <div class="titulo-app">CONÓCETE</div>
+  <div class="sub-app">LOS ASTROS VS MI REALIDAD</div>
+  <div class="reflexivo">"No buscamos predecir tu futuro. Buscamos mostrarte quién ya eres: lo que los astros ven en tu esencia y lo que la psicología confirma desde tu comportamiento real."</div>
+  <label>📅 Día de nacimiento</label>
+  <input type="number" id="dia" placeholder="1 – 31" min="1" max="31">
+  <label>🗓 Mes de nacimiento</label>
+  <select id="mes">
+    <option value="">Selecciona tu mes</option>
+    <option value="1">Enero</option><option value="2">Febrero</option><option value="3">Marzo</option>
+    <option value="4">Abril</option><option value="5">Mayo</option><option value="6">Junio</option>
+    <option value="7">Julio</option><option value="8">Agosto</option><option value="9">Septiembre</option>
+    <option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
+  </select>
+  <label>🕐 Hora aproximada de nacimiento</label>
+  <select id="hora">
+    <option value="">¿A qué hora naciste?</option>
+    <option value="madrugada">Madrugada (12am – 5am)</option>
+    <option value="amanecer">Amanecer (5am – 8am)</option>
+    <option value="manana">Mañana (8am – 12pm)</option>
+    <option value="tarde">Tarde (12pm – 6pm)</option>
+    <option value="noche">Noche (6pm – 12am)</option>
+    <option value="desconocida">No lo sé</option>
+  </select>
+  <label>🌍 País de nacimiento</label>
+  <select id="pais">
+    <option value="">Selecciona tu país</option>
+    <option value="AR">Argentina</option><option value="BO">Bolivia</option><option value="BR">Brasil</option>
+    <option value="CL">Chile</option><option value="CO">Colombia</option><option value="CR">Costa Rica</option>
+    <option value="CU">Cuba</option><option value="DO">República Dominicana</option><option value="EC">Ecuador</option>
+    <option value="SV">El Salvador</option><option value="GT">Guatemala</option><option value="HN">Honduras</option>
+    <option value="MX">México</option><option value="NI">Nicaragua</option><option value="PA">Panamá</option>
+    <option value="PY">Paraguay</option><option value="PE">Perú</option><option value="PR">Puerto Rico</option>
+    <option value="ES">España</option><option value="UY">Uruguay</option><option value="VE">Venezuela</option>
+    <option value="US">Estados Unidos</option><option value="otro">Otro</option>
+  </select>
+  <label>⚥ Me identifico como</label>
+  <select id="sexo">
+    <option value="">Elige una opción</option>
+    <option value="M">Hombre</option><option value="F">Mujer</option>
+  </select>
+  <div class="nav-btns"><button class="gold-btn" onclick="comenzar()">✨ COMENZAR MI PERFIL</button></div>
+</div></div>
+
+<!-- P2: ÁREAS -->
+<div id="p2" class="pant"><div class="card">
+  <div class="steps" id="st2"></div>
+  <h2>🔍 MI MUNDO INTERIOR</h2>
+  <p class="nota">Responde cada área con honestidad. No hay respuestas correctas — solo las tuyas.</p>
+  <div class="prog-wrap">
+    <div class="prog-label" id="progLabel">0 DE 8 ÁREAS COMPLETADAS</div>
+    <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
   </div>
-</div>
-
-<!-- ═══════════════════════════════════════════
-     PANTALLA 2: MI MUNDO INTERIOR (PREGUNTAS)
-═══════════════════════════════════════════ -->
-<div id="p2" class="portada">
-  <div class="card">
-    <div class="steps" id="steps2"></div>
-    <h2>🔍 MI MUNDO INTERIOR</h2>
-    <p style="font-size:0.9rem;color:#8ab4cc;margin-bottom:16px;">Responde cada área con honestidad. No hay respuestas correctas.</p>
-    <div class="progress-bar-wrap">
-      <div class="progress-label" id="progresoLabel">0 DE 8 ÁREAS COMPLETADAS</div>
-      <div class="progress-track"><div class="progress-fill" id="progresoFill" style="width:0%"></div></div>
-    </div>
-    <div class="esferas-grid">
-      <div class="esfera" id="esfAmor" onclick="abrirEsfera('amor')"><div class="esfera-icono">💖</div><div class="esfera-info"><div class="esfera-titulo">Amor y vínculos</div><div class="esfera-estado" id="stAmor">Pendiente</div></div><span class="esfera-check">✔</span></div>
-      <div class="esfera" id="esfFortuna" onclick="abrirEsfera('fortuna')"><div class="esfera-icono">💰</div><div class="esfera-info"><div class="esfera-titulo">Fortuna y recursos</div><div class="esfera-estado" id="stFortuna">Pendiente</div></div><span class="esfera-check">✔</span></div>
-      <div class="esfera" id="esfTemperamento" onclick="abrirEsfera('temperamento')"><div class="esfera-icono">🔥</div><div class="esfera-info"><div class="esfera-titulo">Temperamento y carácter</div><div class="esfera-estado" id="stTemperamento">Pendiente</div></div><span class="esfera-check">✔</span></div>
-      <div class="esfera" id="esfConflictos" onclick="abrirEsfera('conflictos')"><div class="esfera-icono">⚡</div><div class="esfera-info"><div class="esfera-titulo">Conflictos y frustraciones</div><div class="esfera-estado" id="stConflictos">Pendiente</div></div><span class="esfera-check">✔</span></div>
-      <div class="esfera" id="esfNecesidades" onclick="abrirEsfera('necesidades')"><div class="esfera-icono">🧘</div><div class="esfera-info"><div class="esfera-titulo">Necesidades profundas</div><div class="esfera-estado" id="stNecesidades">Pendiente</div></div><span class="esfera-check">✔</span></div>
-      <div class="esfera" id="esfSocial" onclick="abrirEsfera('social')"><div class="esfera-icono">🤝</div><div class="esfera-info"><div class="esfera-titulo">Lo social y el entorno</div><div class="esfera-estado" id="stSocial">Pendiente</div></div><span class="esfera-check">✔</span></div>
-      <div class="esfera" id="esfAspiraciones" onclick="abrirEsfera('aspiraciones')"><div class="esfera-icono">🚀</div><div class="esfera-info"><div class="esfera-titulo">Aspiraciones y propósito</div><div class="esfera-estado" id="stAspiraciones">Pendiente</div></div><span class="esfera-check">✔</span></div>
-      <div class="esfera" id="esfMundo" onclick="abrirEsfera('mundo')"><div class="esfera-icono">🌍</div><div class="esfera-info"><div class="esfera-titulo">Concepción del mundo</div><div class="esfera-estado" id="stMundo">Pendiente</div></div><span class="esfera-check">✔</span></div>
-    </div>
-    <div class="nav-btns">
-      <button class="ghost-btn" onclick="ir('p1')">◀ ANTERIOR</button>
-      <button class="gold-btn" id="btnContinuar2" onclick="ir('p3')" disabled>CONTINUAR ▶</button>
-    </div>
+  <div class="esferas-grid">
+    <div class="esfera" id="esfAmor" onclick="abrirEsfera('amor')"><div class="esf-ico">💖</div><div class="esf-info"><div class="esf-tit">Amor y vínculos</div><div class="esf-st" id="stAmor">Pendiente</div></div><span class="esf-chk">✔</span></div>
+    <div class="esfera" id="esfFortuna" onclick="abrirEsfera('fortuna')"><div class="esf-ico">💰</div><div class="esf-info"><div class="esf-tit">Fortuna y recursos</div><div class="esf-st" id="stFortuna">Pendiente</div></div><span class="esf-chk">✔</span></div>
+    <div class="esfera" id="esfTemperamento" onclick="abrirEsfera('temperamento')"><div class="esf-ico">🔥</div><div class="esf-info"><div class="esf-tit">Temperamento y carácter</div><div class="esf-st" id="stTemperamento">Pendiente</div></div><span class="esf-chk">✔</span></div>
+    <div class="esfera" id="esfConflictos" onclick="abrirEsfera('conflictos')"><div class="esf-ico">⚡</div><div class="esf-info"><div class="esf-tit">Conflictos y frustraciones</div><div class="esf-st" id="stConflictos">Pendiente</div></div><span class="esf-chk">✔</span></div>
+    <div class="esfera" id="esfNecesidades" onclick="abrirEsfera('necesidades')"><div class="esf-ico">🧘</div><div class="esf-info"><div class="esf-tit">Necesidades profundas</div><div class="esf-st" id="stNecesidades">Pendiente</div></div><span class="esf-chk">✔</span></div>
+    <div class="esfera" id="esfSocial" onclick="abrirEsfera('social')"><div class="esf-ico">🤝</div><div class="esf-info"><div class="esf-tit">Lo social y el entorno</div><div class="esf-st" id="stSocial">Pendiente</div></div><span class="esf-chk">✔</span></div>
+    <div class="esfera" id="esfAspiraciones" onclick="abrirEsfera('aspiraciones')"><div class="esf-ico">🚀</div><div class="esf-info"><div class="esf-tit">Aspiraciones y propósito</div><div class="esf-st" id="stAspiraciones">Pendiente</div></div><span class="esf-chk">✔</span></div>
+    <div class="esfera" id="esfMundo" onclick="abrirEsfera('mundo')"><div class="esf-ico">🌍</div><div class="esf-info"><div class="esf-tit">Concepción del mundo</div><div class="esf-st" id="stMundo">Pendiente</div></div><span class="esf-chk">✔</span></div>
   </div>
-</div>
-
-<!-- ═══════════════════════════════════════════
-     PANTALLA SUB: PREGUNTAS DE ESFERA
-═══════════════════════════════════════════ -->
-<div id="pPreguntas" class="portada">
-  <div class="card">
-    <h2 id="tituloEsfera" style="font-size:1.2rem;"></h2>
-    <div id="preguntasContainer"></div>
-    <div class="nav-btns">
-      <button class="ghost-btn" onclick="volverAEsferas()">◀ VOLVER</button>
-      <button class="gold-btn" onclick="guardarEsfera()">GUARDAR ✅</button>
-    </div>
+  <div class="nav-btns">
+    <button class="ghost-btn" onclick="ir('p1')">◀ ANTERIOR</button>
+    <button class="gold-btn" id="btnSig2" onclick="prepararSigno();ir('p3')" disabled>CONTINUAR ▶</button>
   </div>
-</div>
+</div></div>
 
-<!-- ═══════════════════════════════════════════
-     PANTALLA 3: TU SIGNO — LO QUE DICEN LOS ASTROS
-═══════════════════════════════════════════ -->
-<div id="p3" class="portada">
-  <div class="card">
-    <div class="steps" id="steps3"></div>
-    <h2>🔮 TU SIGNO EN 2026</h2>
-    <span class="signo-emblema" id="signoEmoji"></span>
-    <div class="signo-nombre" id="signoNombre"></div>
-    <div class="signo-elemento" id="signoElemento"></div>
-    <div class="prediccion-box">
-      <p id="signoPred"></p>
-    </div>
-    <div class="nav-btns">
-      <button class="ghost-btn" onclick="ir('p2')">◀ ANTERIOR</button>
-      <button class="gold-btn" onclick="construirSignoExtendido(); ir('p4')">SIGUIENTE ▶</button>
-    </div>
+<!-- SUB: PREGUNTAS -->
+<div id="pQ" class="pant"><div class="card">
+  <h2 id="qTitulo" style="font-size:1.1rem;"></h2>
+  <div id="qContenido"></div>
+  <div class="nav-btns">
+    <button class="ghost-btn" onclick="volverAreas()">◀ VOLVER</button>
+    <button class="gold-btn" onclick="guardarArea()">GUARDAR ✅</button>
   </div>
-</div>
+</div></div>
 
-<!-- ═══════════════════════════════════════════
-     PANTALLA 4: LOS ASTROS VEN ESTO EN TI — DETALLADO
-═══════════════════════════════════════════ -->
-<div id="p4" class="portada">
-  <div class="card">
-    <div class="steps" id="steps4"></div>
-    <h2 style="font-size:1.3rem;">✨ LO QUE LOS ASTROS VEN EN TI</h2>
-    <p style="font-size:0.85rem;color:#8ab4cc;margin-bottom:20px;">Lectura astral profunda para <span id="p4signo" style="color:#ffd966;font-weight:700;"></span> en 2026</p>
-    <div id="astralDetalles"></div>
-    <div class="nav-btns">
-      <button class="ghost-btn" onclick="ir('p3')">◀ ANTERIOR</button>
-      <button class="gold-btn" onclick="construirAstralVsPsico(); ir('p5')">SIGUIENTE ▶</button>
-    </div>
+<!-- P3: SIGNO — ESENCIA -->
+<div id="p3" class="pant"><div class="card">
+  <div class="steps" id="st3"></div>
+  <span class="signo-emblema" id="s3emoji"></span>
+  <div class="signo-nombre" id="s3nombre"></div>
+  <div class="signo-sub" id="s3sub"></div>
+  <div class="hora-badge" id="s3hora"></div>
+  <div class="ps"><div class="ps-t">✦ LA ESENCIA DE TU SIGNO</div><div class="ps-x" id="s3esencia"></div></div>
+  <div class="ps"><div class="ps-t">💪 FORTALEZAS</div><div class="tw" id="s3fort"></div></div>
+  <div class="ps"><div class="ps-t">⚠️ SOMBRAS Y RETOS</div><div class="tw" id="s3somb"></div></div>
+  <div class="nav-btns">
+    <button class="ghost-btn" onclick="ir('p2')">◀ ANTERIOR</button>
+    <button class="gold-btn" onclick="construirP4();ir('p4')">SIGUIENTE ▶</button>
   </div>
-</div>
+</div></div>
 
-<!-- ═══════════════════════════════════════════
-     PANTALLA 5: LOS ASTROS VS MI REALIDAD
-═══════════════════════════════════════════ -->
-<div id="p5" class="portada">
-  <div class="card">
-    <div class="steps" id="steps5"></div>
-    <h2 style="font-size:1.2rem;">🌠 LOS ASTROS VS MI REALIDAD</h2>
-    <p style="font-size:0.85rem;color:#8ab4cc;margin-bottom:20px;">Dos espejos. Un mismo ser.</p>
-    <div class="dos-columnas">
-      <div class="col-astral">
-        <div class="col-titulo astral">🔮 Lo Astral</div>
-        <div id="listaAstralDetalle"></div>
-      </div>
-      <div class="divider-vert"></div>
-      <div class="col-psico">
-        <div class="col-titulo psico">🧠 Mi Realidad</div>
-        <div id="listaPsicoDetalle"></div>
-      </div>
-    </div>
-    <div class="nav-btns">
-      <button class="ghost-btn" onclick="ir('p4')">◀ ANTERIOR</button>
-      <button class="gold-btn" onclick="construirConexion(); ir('p6')">SIGUIENTE ▶</button>
-    </div>
+<!-- P4: PERFIL PROFUNDO -->
+<div id="p4" class="pant"><div class="card">
+  <div class="steps" id="st4"></div>
+  <h2 style="font-size:1.2rem;">🧬 TU PERFIL PROFUNDO</h2>
+  <p class="nota">Lo que los astros dicen sobre cómo eres — no qué te pasará.</p>
+  <div id="p4c"></div>
+  <div class="nav-btns">
+    <button class="ghost-btn" onclick="ir('p3')">◀ ANTERIOR</button>
+    <button class="gold-btn" onclick="construirP5();ir('p5')">SIGUIENTE ▶</button>
   </div>
-</div>
+</div></div>
 
-<!-- ═══════════════════════════════════════════
-     PANTALLA 6: CÓMO SE RELACIONAN
-═══════════════════════════════════════════ -->
-<div id="p6" class="portada">
-  <div class="card">
-    <div class="steps" id="steps6"></div>
-    <h2 style="font-size:1.2rem;">🪐 CÓMO SE RELACIONAN</h2>
-    <p style="font-size:0.85rem;color:#8ab4cc;margin-bottom:20px;">Lo que el cosmos y tu psiquis tienen en común.</p>
-    <div class="conexion-wrap" id="conexionContenido"></div>
-    <div class="nav-btns">
-      <button class="ghost-btn" onclick="ir('p5')">◀ ANTERIOR</button>
-      <button class="gold-btn" onclick="construirPerfil(); ir('p7')">MI PERFIL ▶</button>
-    </div>
+<!-- P5: ASTROS VS REALIDAD -->
+<div id="p5" class="pant"><div class="card">
+  <div class="steps" id="st5"></div>
+  <h2 style="font-size:1.2rem;">🌠 LOS ASTROS VS MI REALIDAD</h2>
+  <p class="nota" style="margin-bottom:18px;">Dos espejos. Un mismo ser.</p>
+  <div class="dos-col">
+    <div class="col-a"><div class="col-t aa">🔮 Los Astros</div><div id="p5a"></div></div>
+    <div class="div-v"></div>
+    <div class="col-b"><div class="col-t pp">🧠 Mi Realidad</div><div id="p5p"></div></div>
   </div>
-</div>
-
-<!-- ═══════════════════════════════════════════
-     PANTALLA 7: PERFIL INTEGRADOR
-═══════════════════════════════════════════ -->
-<div id="p7" class="portada">
-  <div class="card">
-    <div class="steps" id="steps7"></div>
-    <h2>🌟 TU PERFIL INTEGRADOR</h2>
-    <div id="perfilContenido"></div>
-    <div class="nav-btns">
-      <button class="ghost-btn" onclick="ir('p6')">◀ ANTERIOR</button>
-      <button class="gold-btn" onclick="ir('p8')">FINALIZAR 🌟</button>
-    </div>
+  <div class="nav-btns">
+    <button class="ghost-btn" onclick="ir('p4')">◀ ANTERIOR</button>
+    <button class="gold-btn" onclick="construirP6();ir('p6')">SIGUIENTE ▶</button>
   </div>
-</div>
+</div></div>
 
-<!-- ═══════════════════════════════════════════
-     PANTALLA 8: AGRADECIMIENTO
-═══════════════════════════════════════════ -->
-<div id="p8" class="portada">
-  <div class="card">
-    <span class="gracias-estrella">🌌</span>
-    <div class="gracias-frase">GRACIAS POR MIRARTE</div>
-    <p class="gracias-sub">Has completado una lectura que muy pocas personas se dan el tiempo de hacer: detenerse, observarse y preguntarse quién eres realmente.</p>
-    <br>
-    <p class="gracias-sub">Los astros marcan el camino. Tú decides cómo caminarlo.</p>
-    <div class="firma">— HORÓSCOPO 2026 · LOS ASTROS VS MI REALIDAD —</div>
-    <div class="nav-btns">
-      <button class="ghost-btn" onclick="ir('p7')">◀ ANTERIOR</button>
-      <button class="gold-btn" onclick="reiniciar()">✨ COMENZAR DE NUEVO</button>
-    </div>
+<!-- P6: CÓMO SE RELACIONAN -->
+<div id="p6" class="pant"><div class="card">
+  <div class="steps" id="st6"></div>
+  <h2 style="font-size:1.2rem;">🪐 CÓMO SE RELACIONAN</h2>
+  <p class="nota">Los puntos donde el símbolo y la psicología se encuentran.</p>
+  <div id="p6c"></div>
+  <div class="nav-btns">
+    <button class="ghost-btn" onclick="ir('p5')">◀ ANTERIOR</button>
+    <button class="gold-btn" onclick="construirP7();ir('p7')">MI PERFIL FINAL ▶</button>
   </div>
+</div></div>
+
+<!-- P7: PERFIL FINAL -->
+<div id="p7" class="pant"><div class="card">
+  <div class="steps" id="st7"></div>
+  <h2>🌟 QUIÉN ERES</h2>
+  <div id="p7c"></div>
+  <div class="nav-btns">
+    <button class="ghost-btn" onclick="ir('p6')">◀ ANTERIOR</button>
+    <button class="gold-btn" onclick="ir('p8')">FINALIZAR ✨</button>
+  </div>
+</div></div>
+
+<!-- P8: GRACIAS -->
+<div id="p8" class="pant"><div class="card">
+  <span class="gracias-ico">🌌</span>
+  <div class="gracias-frase">GRACIAS POR MIRARTE</div>
+  <p class="gracias-sub">Has hecho algo que pocas personas se permiten: detenerte, observarte y preguntarte honestamente quién eres.</p><br>
+  <p class="gracias-sub">Los astros trazan el mapa. La psicología describe el terreno. Tú eres el viajero que decide hacia dónde va.</p>
+  <div class="firma">— CONÓCETE · LOS ASTROS VS MI REALIDAD —</div>
+  <div class="nav-btns">
+    <button class="ghost-btn" onclick="ir('p7')">◀ ANTERIOR</button>
+    <button class="gold-btn" onclick="reiniciar()">✨ COMENZAR DE NUEVO</button>
+  </div>
+</div></div>
+
 </div>
-
-</div><!-- /app-container -->
-
 <script>
-// ═══════════════════════════════════
-// DATOS: SIGNOS ZODIACALES
-// ═══════════════════════════════════
-const SIGNOS = [
-  {
-    nombre:'Aries', emoji:'♈', elemento:'Fuego', planeta:'Marte', polaridad:'Positivo',
-    inicio:'03-21', fin:'04-19',
-    prediccion2026:'2026 abre para Aries un período de consolidación. Marte, tu regente, te impulsa hacia nuevos territorios en lo profesional, pero los astros advierten: la velocidad sin dirección dispersa la energía. El primer semestre exige paciencia y estrategia; el segundo te recompensa con avances tangibles. En el amor, una conexión inesperada te sacudirá por dentro, desafiando tu tendencia a liderar desde el ego. La salud pide que escuches tu cuerpo antes de que él te detenga.',
-    astral: {
-      temperamento: 'Ardiente, directo, sin filtros',
-      caracter: 'Líder nato que actúa antes de pensar',
-      amor: 'Pasional e impulsivo; se entrega rápido pero se cansa igual',
-      fortuna: 'Atrae dinero con impulso; lo pierde con la misma velocidad',
-      social: 'Magnético pero dominante en grupos',
-      aspiraciones: 'Busca ser el primero, siempre',
-      necesidades: 'Necesita retos constantes para sentirse vivo',
-      conflictos: 'Confronta de frente; raramente cede',
-      biologia: 'Energía física desbordante; tendencia a lesiones por exceso',
-      mundo: 'El mundo es un terreno de conquista'
-    }
-  },
-  {
-    nombre:'Tauro', emoji:'♉', elemento:'Tierra', planeta:'Venus', polaridad:'Negativo',
-    inicio:'04-20', fin:'05-20',
-    prediccion2026:'Venus bendice a Tauro en 2026 con estabilidad material y emocional, pero el precio es salir de la zona cómoda. El eje económico se fortalece si actúas en el primer trimestre. En lo afectivo, una relación existente se profundiza o se cuestiona definitivamente: no hay término medio. Tu cuerpo pide cambios en rutinas sedentarias. El desafío del año: aprender que soltar también es ganar.',
-    astral: {
-      temperamento: 'Calmado, tenaz, difícil de mover',
-      caracter: 'Firme en sus valores; perseverante hasta el límite',
-      amor: 'Leal y sensual; el abandono lo marca profundo',
-      fortuna: 'Construye riqueza lento pero sin caídas',
-      social: 'Selectivo; prefiere pocos vínculos sólidos',
-      aspiraciones: 'Busca seguridad y legado concreto',
-      necesidades: 'Necesita estabilidad para florecer',
-      conflictos: 'Evita el conflicto pero cuando explota, es definitivo',
-      biologia: 'Resistente; puntos débiles en garganta y cuello',
-      mundo: 'El mundo es un lugar para construir y conservar'
-    }
-  },
-  {
-    nombre:'Géminis', emoji:'♊', elemento:'Aire', planeta:'Mercurio', polaridad:'Positivo',
-    inicio:'05-21', fin:'06-20',
-    prediccion2026:'Mercurio activa en 2026 la mente más brillante del zodiaco, pero también la más dispersa. El año trae oportunidades múltiples: el reto es elegir una sola y comprometerse. En el amor, buscas conexión intelectual y profundidad emocional al mismo tiempo; si los encuentras juntos, lo encontraste todo. Cuida el sistema nervioso: tu ritmo mental puede desbordarte. El segundo semestre trae noticias que cambian una perspectiva importante.',
-    astral: {
-      temperamento: 'Rápido, adaptable, siempre en movimiento',
-      caracter: 'Dos versiones en una; brillante e inconsistente a la vez',
-      amor: 'Necesita estimulación mental para que el corazón siga',
-      fortuna: 'Gana por ideas e información, no por rutina',
-      social: 'Conecta fácil con todos; la profundidad cuesta',
-      aspiraciones: 'Quiere saber todo y estar en todo',
-      necesidades: 'Necesita variedad o se marchita',
-      conflictos: 'Debate, ironiza, esquiva; rara vez confronta de frente',
-      biologia: 'Sistema nervioso sensible; insomnio frecuente',
-      mundo: 'El mundo es una red de ideas e intercambios'
-    }
-  },
-  {
-    nombre:'Cáncer', emoji:'♋', elemento:'Agua', planeta:'Luna', polaridad:'Negativo',
-    inicio:'06-21', fin:'07-22',
-    prediccion2026:'La Luna guía a Cáncer hacia uno de los años más transformadores de la década. La familia y los vínculos cercanos pasan a primer plano. Una situación del pasado que creías resuelta reaparece para ser sanada definitivamente. En el plano económico, la intuición te llevará a decisiones acertadas si confías en ella. El amor pide que bajes las defensas: lo que proteges demasiado no puede crecer.',
-    astral: {
-      temperamento: 'Emocional, intuitivo, profundamente sensible',
-      caracter: 'Protector feroz de los suyos; vulnerable bajo la coraza',
-      amor: 'Se entrega completamente o no se entrega',
-      fortuna: 'Atrae abundancia a través del hogar y la familia',
-      social: 'Pequeño círculo íntimo; desconfía de lo nuevo',
-      aspiraciones: 'Quiere seguridad emocional más que éxito externo',
-      necesidades: 'Necesita sentirse contenido y amado',
-      conflictos: 'Se repliega; guarda rencores sin decirlos',
-      biologia: 'Estómago e intestino reflejan su estado emocional',
-      mundo: 'El mundo es un lugar que puede lastimar; el hogar es el refugio'
-    }
-  },
-  {
-    nombre:'Leo', emoji:'♌', elemento:'Fuego', planeta:'Sol', polaridad:'Positivo',
-    inicio:'07-23', fin:'08-22',
-    prediccion2026:'El Sol ilumina a Leo en 2026 con una energía de renacimiento. Los primeros meses son ideales para lanzar proyectos creativos o profesionales que habías pospuesto. El amor te sorprende cuando dejas de buscarlo: llega en la forma menos esperada. Tu mayor trabajo este año es aprender a recibir sin necesitar aplausos. La generosidad que das sin esperar retorno se multiplica en lo económico hacia el final del año.',
-    astral: {
-      temperamento: 'Magnético, apasionado, necesita ser visto',
-      caracter: 'Generoso hasta el exceso; orgulloso hasta el dolor',
-      amor: 'Romántico intenso; la lealtad es innegociable',
-      fortuna: 'Atrae abundancia cuando actúa desde el corazón, no el ego',
-      social: 'Centro de atención natural; inspira a los demás',
-      aspiraciones: 'Quiere dejar huella y ser recordado',
-      necesidades: 'Necesita reconocimiento para mantenerse motivado',
-      conflictos: 'El orgullo herido lo lleva a reacciones desproporcionadas',
-      biologia: 'Corazón y espalda son sus zonas vulnerables',
-      mundo: 'El mundo es un escenario donde dejar su marca'
-    }
-  },
-  {
-    nombre:'Virgo', emoji:'♍', elemento:'Tierra', planeta:'Mercurio', polaridad:'Negativo',
-    inicio:'08-23', fin:'09-22',
-    prediccion2026:'2026 pone a Virgo ante su mayor desafío: confiar. El año trae situaciones donde el análisis no alcanza y la fe tiene que tomar el relevo. En lo profesional, tu precisión y capacidad de trabajo serán reconocidas de una forma que no esperabas. El amor pide que dejes de buscar la versión perfecta y aceptes la versión real. La salud mejora cuando la mente suelta el control; el cuerpo respira cuando la mente descansa.',
-    astral: {
-      temperamento: 'Analítico, meticuloso, críticamente observador',
-      caracter: 'Servicial hasta el sacrificio; exigente consigo y con otros',
-      amor: 'Cuida con acciones concretas; la expresión emocional le cuesta',
-      fortuna: 'Administra bien; acumula con disciplina',
-      social: 'Prefiere contextos donde aporta valor; huye del caos',
-      aspiraciones: 'Quiere perfeccionar todo lo que toca',
-      necesidades: 'Necesita orden mental para sentir paz',
-      conflictos: 'Critica, se repliega o se martiriza; evita el enfrentamiento',
-      biologia: 'Sistema digestivo refleja su nivel de estrés mental',
-      mundo: 'El mundo es un sistema que puede optimizarse'
-    }
-  },
-  {
-    nombre:'Libra', emoji:'♎', elemento:'Aire', planeta:'Venus', polaridad:'Positivo',
-    inicio:'09-23', fin:'10-22',
-    prediccion2026:'Venus trae a Libra en 2026 una invitación a tomar decisiones que llevas postergando. El equilibrio que buscas afuera solo existe cuando lo construyes adentro. Las relaciones personales se depuran: lo que no tiene base real se cae solo. En lo profesional, asociaciones y colaboraciones son el camino. El amor estable y recíproco está disponible si dejas de idealizar. El año cierra con una claridad sobre tu propósito que nunca habías tenido.',
-    astral: {
-      temperamento: 'Diplomático, estético, alérgico a la injusticia',
-      caracter: 'Armonioso por fuera; guerra interna por la indecisión',
-      amor: 'Necesita reciprocidad y estética en la relación',
-      fortuna: 'Gana por colaboración y alianzas bien elegidas',
-      social: 'Conector nato; todos lo quieren tener cerca',
-      aspiraciones: 'Quiere belleza, justicia y paz en todo lo que hace',
-      necesidades: 'Necesita balance entre dar y recibir',
-      conflictos: 'Evita el conflicto hasta que ya no puede más',
-      biologia: 'Riñones y zona lumbar acumulan el estrés no expresado',
-      mundo: 'El mundo puede y debe ser más justo y bello'
-    }
-  },
-  {
-    nombre:'Escorpio', emoji:'♏', elemento:'Agua', planeta:'Plutón', polaridad:'Negativo',
-    inicio:'10-23', fin:'11-21',
-    prediccion2026:'Plutón lleva a Escorpio en 2026 por una transformación que no pide permiso. Lo que no sirve se cae. Lo que es real se fortalece. Un ciclo de años cierra definitivamente: algo muere para que algo nuevo nazca. En el amor, la intensidad que siempre has buscado llega, pero requiere que bajes las defensas que construiste para sobrevivir. El poder personal aumenta cuando se deja de controlar a los demás y se invierte ese poder en uno mismo.',
-    astral: {
-      temperamento: 'Intenso, perspicaz, nunca superficial',
-      caracter: 'Voluntad de hierro; nunca olvida ni una ofensa ni un gesto de amor',
-      amor: 'Todo o nada; la traición es inaceptable',
-      fortuna: 'Instinto certero para los negocios; sabe dónde está el poder',
-      social: 'Pocos vínculos pero de una lealtad extrema',
-      aspiraciones: 'Quiere transformar, no solo lograr',
-      necesidades: 'Necesita profundidad y verdad en todo',
-      conflictos: 'No pelea de frente; opera desde la sombra',
-      biologia: 'Sistema reproductivo y hormonal como zona de expresión emocional',
-      mundo: 'El mundo tiene capas ocultas que hay que entender para sobrevivir'
-    }
-  },
-  {
-    nombre:'Sagitario', emoji:'♐', elemento:'Fuego', planeta:'Júpiter', polaridad:'Positivo',
-    inicio:'11-22', fin:'12-21',
-    prediccion2026:'Júpiter expande el horizonte de Sagitario en 2026 de maneras que superan lo esperado. Oportunidades de viaje, estudio o cambio de paradigma llegan en el primer semestre. El amor aparece donde menos lo buscabas, en contextos de crecimiento o aventura compartida. El reto del año: el compromiso. No con otros, sino con tus propias decisiones. La libertad que buscas no está en huir, está en ser fiel a quien verdaderamente eres.',
-    astral: {
-      temperamento: 'Expansivo, optimista, filosófico',
-      caracter: 'Honesto hasta la crueldad; libre hasta la irresponsabilidad',
-      amor: 'Necesita libertad dentro del vínculo o se asfixia',
-      fortuna: 'Atraído por lo grande; el dinero viene y va en grandes flujos',
-      social: 'Amigo de todos; profundo con pocos',
-      aspiraciones: 'Quiere encontrar el sentido de todo',
-      necesidades: 'Necesita expandirse: en conocimiento, en espacio, en experiencia',
-      conflictos: 'Huye del conflicto o lo resuelve con humor; raramente lo profundiza',
-      biologia: 'Caderas y sistema hepático como zonas de acumulación',
-      mundo: 'El mundo es un aula enorme que hay que recorrer'
-    }
-  },
-  {
-    nombre:'Capricornio', emoji:'♑', elemento:'Tierra', planeta:'Saturno', polaridad:'Negativo',
-    inicio:'12-22', fin:'01-19',
-    prediccion2026:'Saturno exige a Capricornio en 2026 que balancee el logro externo con el mundo interno que ha pospuesto demasiado. Profesionalmente, el año trae el reconocimiento de años de trabajo: no lo rechaces. En las relaciones, alguien que valora tu consistencia y te ve más allá del éxito llega o se consolida. Tu mayor tarea: soltar la rigidez que ya no te protege, solo te aísla. Lo que construyes este año es para quedarse décadas.',
-    astral: {
-      temperamento: 'Serio, disciplinado, orientado a resultados',
-      caracter: 'Ambicioso con ética; se exige más que a nadie',
-      amor: 'Cauteloso para entrar; totalmente fiel cuando entra',
-      fortuna: 'Construye patrimonio con visión a largo plazo',
-      social: 'Respetado más que querido; la calidez tarda en aparecer',
-      aspiraciones: 'Quiere dejar un legado concreto y duradero',
-      necesidades: 'Necesita propósito claro para funcionar',
-      conflictos: 'Controla, endurece o desaparece del mapa',
-      biologia: 'Rodillas, huesos y piel como zonas de manifestación del estrés',
-      mundo: 'El mundo premia el esfuerzo sostenido y la responsabilidad'
-    }
-  },
-  {
-    nombre:'Acuario', emoji:'♒', elemento:'Aire', planeta:'Urano', polaridad:'Positivo',
-    inicio:'01-20', fin:'02-18',
-    prediccion2026:'Urano sacude a Acuario en 2026 con cambios que no pidió pero que necesitaba. El año rompe estructuras que ya eran límites disfrazados de estabilidad. En lo colectivo, tu visión y propuestas toman relevancia. En el amor, aparece alguien que te entiende en una frecuencia que creías no existía. El desafío: aprender a recibir calidez sin catalogarla como dependencia. Lo que más temes —la vulnerabilidad— es este año tu mayor herramienta.',
-    astral: {
-      temperamento: 'Independiente, visionario, emocionalmente distante',
-      caracter: 'Original sin esfuerzo; rebelde por convicción',
-      amor: 'Necesita una conexión mental profunda antes que emocional',
-      fortuna: 'Gana por innovación y por ir donde nadie más va',
-      social: 'Amante de la humanidad; distante con los individuos cercanos',
-      aspiraciones: 'Quiere cambiar el mundo, no solo sobrevivir en él',
-      necesidades: 'Necesita libertad total de pensamiento y acción',
-      conflictos: 'Se desconecta emocionalmente; analiza desde lejos',
-      biologia: 'Sistema circulatorio y tobillos como zonas sensibles',
-      mundo: 'El mundo necesita ser reinventado desde sus bases'
-    }
-  },
-  {
-    nombre:'Piscis', emoji:'♓', elemento:'Agua', planeta:'Neptuno', polaridad:'Negativo',
-    inicio:'02-19', fin:'03-20',
-    prediccion2026:'Neptuno profundiza en 2026 la espiritualidad y la intuición de Piscis hasta niveles que sorprenden incluso al propio signo. Una llamada interior que llevas ignorando pide atención urgente. En el amor, conexiones profundas y casi kármicas. En lo económico, la creatividad es el camino; lo convencional te ahoga. Tu mayor riesgo: la evasión. Tu mayor fortaleza: la empatía profunda que cuando se dirige hacia uno mismo, se convierte en sabiduría.',
-    astral: {
-      temperamento: 'Empático, soñador, poroso a las emociones ajenas',
-      caracter: 'Altruista sin límites; se pierde en los demás con facilidad',
-      amor: 'Ama con una entrega que pocos entienden ni merecen',
-      fortuna: 'La abundancia llega cuando se conecta con su propósito creativo',
-      social: 'Absorbe el estado emocional de quienes lo rodean',
-      aspiraciones: 'Quiere trascender, conectar con algo más grande',
-      necesidades: 'Necesita silencio, belleza y conexión espiritual',
-      conflictos: 'Huye, se difumina o se sacrifica; raramente confronta',
-      biologia: 'Pies y sistema linfático como zonas de acumulación',
-      mundo: 'El mundo es un velo detrás del cual hay algo más verdadero'
-    }
-  }
+// ══════════════════════════════════════════
+// BASE DE DATOS — SIGNOS
+// ══════════════════════════════════════════
+const SIGNOS=[
+  {nombre:'Aries',emoji:'♈',elemento:'Fuego 🔥',planeta:'Marte',inicio:'03-21',fin:'04-19',
+   esencia:'Aries llega al mundo con una energía que precede al pensamiento. Eres el primer signo del zodiaco y eso se siente: hay en ti una urgencia vital, un impulso de ser, actuar y existir que otros simplemente no tienen. No te mueves por el mundo — lo abres. Tu naturaleza es pionera, directa y apasionada. El reto es que esa misma energía que te hace poderoso puede convertirse en impaciencia, impulsividad o conflicto cuando no tiene canal.',
+   fort:['Iniciativa natural','Coraje ante lo nuevo','Energía inagotable','Honestidad directa','Liderazgo instintivo','Capacidad de renacer'],
+   somb:['Impaciencia crónica','Impulsividad sin filtro','Dificultad para escuchar','Abandona lo que empieza','Ego frágil bajo la dureza'],
+   p:{mente:'Mente rápida y conectiva. Capta el panorama antes que el detalle. Procesa en acción, no en reflexión.',
+      emoc:'Alta intensidad emocional disfrazada de fortaleza. Siente mucho pero lo convierte en movimiento.',
+      vinc:'En el amor se entrega con pasión y velocidad. Necesita un vínculo que lo desafíe sin dominarlo.',
+      trab:'Mejor como iniciador. Excelente para arrancar proyectos y liderar en crisis. Le cuesta la rutina.',
+      cont:[['Quiere liderar','pero no siempre sabe a dónde va'],['Es valiente','pero el miedo al fracaso lo detiene internamente'],['Parece seguro','pero necesita validación más de lo que muestra']],
+      prop:'Abrir caminos. Ser el que se atreve primero. Inspirar por el ejemplo, no por el discurso.',
+      bio:'Cabeza y sistema suprarrenal. El estrés se expresa en cefaleas o caída de energía repentina.'},
+   a10:[{l:'TEMPERAMENTO',v:'Ardiente, directo, sin filtros'},{l:'CARÁCTER',v:'Líder nato que actúa antes de pensar'},{l:'EN EL AMOR',v:'Pasional; se entrega rápido, necesita el fuego vivo'},{l:'FORTUNA',v:'Atrae recursos con impulso; los gestiona con dificultad'},{l:'LO SOCIAL',v:'Magnético y dominante en grupos'},{l:'ASPIRACIONES',v:'Ser el primero. Siempre. Dejar marca.'},{l:'NECESIDADES',v:'Retos constantes para sentirse vivo'},{l:'CONFLICTOS',v:'Confronta de frente; raramente cede'},{l:'BIOLOGÍA',v:'Energía desbordante; lesiones por exceso'},{l:'VISIÓN DEL MUNDO',v:'Un terreno de conquista'}]},
+  {nombre:'Tauro',emoji:'♉',elemento:'Tierra 🌱',planeta:'Venus',inicio:'04-20',fin:'05-20',
+   esencia:'Tauro es la energía de lo que permanece. Llevas en ti una necesidad de construir, conservar y disfrutar lo que ya tienes antes de correr hacia lo siguiente. Tu naturaleza es sensorial, paciente y profundamente leal. Esa fortaleza también puede ser tu jaula: la resistencia al cambio puede mantenerte en lugares, relaciones o formas de pensar que ya cumplieron su función.',
+   fort:['Perseverancia sin igual','Lealtad profunda','Inteligencia práctica','Sensualidad natural','Gestión paciente de recursos','Estabilidad emocional sostenida'],
+   somb:['Resistencia al cambio','Posesividad en vínculos','Terquedad extrema','Explosión tardía pero devastadora'],
+   p:{mente:'Mente metódica y concreta. No es la más rápida, pero es de las más sólidas. Piensa en estructuras y en lo que dura.',
+      emoc:'Alta capacidad de contención. Puede guardar mucho durante mucho tiempo. Cuando explota, no hay término medio.',
+      vinc:'Busca estabilidad y reciprocidad. Cuando se entrega es con cuerpo y alma pero no tolera la traición.',
+      trab:'Finanzas, construcción, gastronomía, arte, bienes raíces. Detesta los ambientes caóticos.',
+      cont:[['Busca seguridad','pero a veces la seguridad lo paraliza'],['Es generoso','pero guarda todo lo que teme perder'],['Parece inamovible','pero tiene una sensibilidad interna que pocos ven']],
+      prop:'Construir algo que dure. Crear belleza y estabilidad. Ser raíz para quienes lo rodean.',
+      bio:'Garganta, tiroides, cuello. El estrés emocional no expresado se asienta en esa zona.'},
+   a10:[{l:'TEMPERAMENTO',v:'Calmado, tenaz, difícil de mover'},{l:'CARÁCTER',v:'Firme en sus valores; perseverante hasta el límite'},{l:'EN EL AMOR',v:'Leal y sensual; el abandono lo marca para siempre'},{l:'FORTUNA',v:'Construye riqueza lento pero con bases sólidas'},{l:'LO SOCIAL',v:'Selectivo; pocos vínculos pero profundos'},{l:'ASPIRACIONES',v:'Seguridad, belleza y legado concreto'},{l:'NECESIDADES',v:'Estabilidad y continuidad para florecer'},{l:'CONFLICTOS',v:'Evita el conflicto; cuando explota, es definitivo'},{l:'BIOLOGÍA',v:'Garganta y cuello como zona vulnerable'},{l:'VISIÓN DEL MUNDO',v:'Un lugar para construir y conservar lo bueno'}]},
+  {nombre:'Géminis',emoji:'♊',elemento:'Aire 💨',planeta:'Mercurio',inicio:'05-21',fin:'06-20',
+   esencia:'Géminis es el signo de la mente que no descansa. Llevas dentro dos versiones de ti: la que analiza y la que siente, la que se compromete y la que necesita libertad. Esa dualidad no es un defecto — es tu riqueza. Tu mayor regalo es tu capacidad de conectar ideas, personas y perspectivas que nadie más hubiera unido.',
+   fort:['Inteligencia versátil','Comunicación brillante','Adaptabilidad extrema','Curiosidad insaciable','Conecta a personas naturalmente','Humor e ingenio agudo'],
+   somb:['Inconstancia que desorienta','Dificultad de compromiso','Nerviosismo e insomnio','Superficialidad en momentos profundos'],
+   p:{mente:'Una de las mentes más rápidas del zodiaco. Conecta múltiples flujos a la vez. El riesgo: la dispersión.',
+      emoc:'Intelectualiza lo que siente para no quedarse atrapado en ello. Necesita aprender que sentir no es perder el control.',
+      vinc:'Necesita estimulación mental para que el corazón siga. La lealtad existe pero requiere libertad dentro del compromiso.',
+      trab:'Comunicación, periodismo, marketing, docencia, tecnología. Cualquier campo donde las ideas se muevan rápido.',
+      cont:[['Busca profundidad','pero la velocidad de su mente lo distrae de ella'],['Es sociable','pero puede sentirse solo en medio de una multitud'],['Parece seguro','pero la duda interna es constante']],
+      prop:'Ser puente. Conectar lo desconectado. Transmitir lo que otros no saben cómo decir.',
+      bio:'Sistema nervioso, pulmones, manos. El estrés se expresa en ansiedad o insomnio.'},
+   a10:[{l:'TEMPERAMENTO',v:'Rápido, adaptable, siempre en movimiento mental'},{l:'CARÁCTER',v:'Dos versiones en una; brillante e inconsistente a la vez'},{l:'EN EL AMOR',v:'Necesita conexión mental o el corazón se apaga'},{l:'FORTUNA',v:'Gana por ideas y palabras, no por rutina'},{l:'LO SOCIAL',v:'Conecta con todos; la profundidad prolongada le cuesta'},{l:'ASPIRACIONES',v:'Saberlo todo, conectarlo todo'},{l:'NECESIDADES',v:'Variedad y estimulación o se marchita'},{l:'CONFLICTOS',v:'Debate, ironiza, esquiva; rara vez confronta de frente'},{l:'BIOLOGÍA',v:'Sistema nervioso sensible; insomnio frecuente'},{l:'VISIÓN DEL MUNDO',v:'Una red de ideas e intercambios infinitos'}]},
+  {nombre:'Cáncer',emoji:'♋',elemento:'Agua 🌊',planeta:'Luna',inicio:'06-21',fin:'07-22',
+   esencia:'Cáncer es el signo de la memoria emocional. Llevas grabado en ti todo lo que has sentido, todo lo que has amado y todo lo que te ha dolido. Tienes una intuición casi sobrenatural para captar lo que otros sienten y una lealtad que pocos signos pueden igualar. El reto está en no construir muros tan altos que lo que quieres proteger quede encerrado adentro.',
+   fort:['Intuición excepcional','Lealtad profunda y duradera','Cuidar sin condición','Memoria emocional rica','Instinto protector poderoso'],
+   somb:['Apego al pasado','Cambios de humor bruscos','Rencores que no se dicen','Dificultad para soltar lo que ya terminó'],
+   p:{mente:'Mente intuitiva y no lineal. Piensa por asociaciones emocionales. La memoria es su herramienta principal.',
+      emoc:'Siente todo — lo suyo y lo ajeno. Necesita aprender a distinguir qué emociones son propias y cuáles absorbió del entorno.',
+      vinc:'Se entrega completamente o no se entrega. La seguridad emocional es más importante que el romance externo.',
+      trab:'Psicología, enfermería, educación, hostelería, arte, historia. Todo lo que implique cuidar o preservar algo valioso.',
+      cont:[['Quiere intimidad','pero el miedo al abandono lo lleva a alejarse primero'],['Es generoso','pero espera reciprocidad aunque no lo diga'],['Parece fuerte','pero lleva heridas que nunca terminó de sanar']],
+      prop:'Crear hogar. Contener a quienes lo rodean. Preservar lo que vale la pena.',
+      bio:'Estómago, sistema digestivo, pecho. Las emociones no expresadas se alojan como tensión digestiva.'},
+   a10:[{l:'TEMPERAMENTO',v:'Emocional, intuitivo, profundamente sensible'},{l:'CARÁCTER',v:'Protector feroz; vulnerable bajo la coraza'},{l:'EN EL AMOR',v:'Todo o nada; la traición emocional no se olvida'},{l:'FORTUNA',v:'La abundancia llega a través del hogar y los vínculos'},{l:'LO SOCIAL',v:'Círculo pequeño e íntimo; desconfía de lo nuevo'},{l:'ASPIRACIONES',v:'Seguridad emocional profunda más que éxito visible'},{l:'NECESIDADES',v:'Sentirse contenido, amado y comprendido'},{l:'CONFLICTOS',v:'Se repliega; guarda rencores sin expresarlos'},{l:'BIOLOGÍA',v:'Estómago e intestino reflejan su estado emocional'},{l:'VISIÓN DEL MUNDO',v:'El hogar es el refugio real'}]},
+  {nombre:'Leo',emoji:'♌',elemento:'Fuego 🔥',planeta:'Sol',inicio:'07-23',fin:'08-22',
+   esencia:'Leo llega al mundo con una luz interna que no puede apagarse aunque lo intente. Llevas en ti la necesidad de crear, expresar y dejar huella. No se trata de vanidad — es que sientes que tienes algo real que aportar. Tu generosidad es genuina, tu lealtad es absoluta y tu capacidad de inspirar a otros es extraordinaria.',
+   fort:['Carisma natural','Generosidad genuina','Lealtad absoluta','Creatividad poderosa','Inspira a otros naturalmente'],
+   somb:['Orgullo que bloquea el aprendizaje','Necesidad excesiva de reconocimiento','Dramatismo en conflictos','Dificultad para recibir críticas'],
+   p:{mente:'Mente creativa e intuitiva. Piensa en grande. No le interesa lo pequeño o lo gris.',
+      emoc:'Ama profundamente, se duele profundamente. El orgullo impide que pida perdón o ayuda cuando más lo necesita.',
+      vinc:'Romántico, leal y entregado. Espera reciprocidad en la admiración. Cuando se siente ignorado, se apaga o explota.',
+      trab:'Artes, liderazgo, emprendimiento, moda, publicidad. Donde la presencia y el carisma sean herramientas.',
+      cont:[['Parece seguro','pero el miedo al rechazo es profundo'],['Es generoso','pero necesita que ese dar sea visto y valorado'],['Inspira a otros','pero puede depender de esa admiración para sentirse bien']],
+      prop:'Crear. Inspirar. Ser la luz que otros necesitan para encontrar la propia.',
+      bio:'Corazón, columna, espalda. El estrés emocional puede manifestarse en dolor de espalda.'},
+   a10:[{l:'TEMPERAMENTO',v:'Magnético, apasionado, necesita ser visto'},{l:'CARÁCTER',v:'Generoso hasta el exceso; orgulloso hasta el dolor'},{l:'EN EL AMOR',v:'Romántico total; la lealtad y el reconocimiento son sagrados'},{l:'FORTUNA',v:'Atrae abundancia desde el corazón, no el ego'},{l:'LO SOCIAL',v:'Centro de atención natural; inspira sin proponérselo'},{l:'ASPIRACIONES',v:'Dejar huella. Ser recordado por lo que creó.'},{l:'NECESIDADES',v:'Reconocimiento genuino para mantenerse motivado'},{l:'CONFLICTOS',v:'El orgullo herido lleva a reacciones desproporcionadas'},{l:'BIOLOGÍA',v:'Corazón y espalda como zonas de acumulación'},{l:'VISIÓN DEL MUNDO',v:'Un escenario donde dejar su marca única'}]},
+  {nombre:'Virgo',emoji:'♍',elemento:'Tierra 🌱',planeta:'Mercurio',inicio:'08-23',fin:'09-22',
+   esencia:'Virgo es el signo de la mente al servicio. Llevas en ti una capacidad analítica extraordinaria y una necesidad profunda de que las cosas tengan sentido, orden y propósito. Tu mayor lección es aprender que imperfecto y valioso no son contradictorios.',
+   fort:['Análisis excepcional','Atención al detalle','Disciplina real','Servicio genuino','Pensamiento crítico agudo','Confiabilidad absoluta'],
+   somb:['Autocrítica destructiva','Perfeccionismo paralizante','Dificultad para delegar','Ansiedad ante la incertidumbre'],
+   p:{mente:'Una de las mentes más precisas del zodiaco. Distingue matices que otros no ven. El riesgo: el sobre-análisis.',
+      emoc:'Cuida a través de actos concretos porque las palabras emocionales le generan incomodidad.',
+      vinc:'Cuida con hechos, no con palabras. Busca alguien coherente y confiable.',
+      trab:'Medicina, farmacia, nutrición, contabilidad, programación, investigación. Donde el detalle sea fundamental.',
+      cont:[['Quiere ayudar a todos','pero se agota porque no pone límites'],['Busca perfección','pero esa búsqueda le impide disfrutar lo que logró'],['Parece frío','pero tiene una sensibilidad interna intensa']],
+      prop:'Mejorar lo que existe. Servir con inteligencia. Crear sistemas que funcionen.',
+      bio:'Sistema digestivo, intestino, sistema nervioso autónomo. El estrés mental se expresa en el vientre.'},
+   a10:[{l:'TEMPERAMENTO',v:'Analítico, meticuloso, críticamente observador'},{l:'CARÁCTER',v:'Servicial hasta el sacrificio; exigente consigo y con otros'},{l:'EN EL AMOR',v:'Cuida con acciones; la expresión emocional directa le cuesta'},{l:'FORTUNA',v:'Administra con precisión; acumula con disciplina real'},{l:'LO SOCIAL',v:'Aporta valor; huye del caos y la superficialidad'},{l:'ASPIRACIONES',v:'Perfeccionar todo lo que toca'},{l:'NECESIDADES',v:'Orden mental para sentir paz interior'},{l:'CONFLICTOS',v:'Critica, se repliega o se martiriza antes de confrontar'},{l:'BIOLOGÍA',v:'Sistema digestivo como espejo del estrés mental'},{l:'VISIÓN DEL MUNDO',v:'Un sistema que puede y debe optimizarse'}]},
+  {nombre:'Libra',emoji:'♎',elemento:'Aire 💨',planeta:'Venus',inicio:'09-23',fin:'10-22',
+   esencia:'Libra es el signo del equilibrio que nunca termina de encontrarse — no porque sea imposible, sino porque el equilibrio real es un proceso dinámico. Llevas en ti una sensibilidad estética profunda, un sentido de la justicia genuino y una capacidad de ver todos los lados de un asunto que pocos tienen.',
+   fort:['Diplomacia natural','Sentido estético elevado','Capacidad de mediación','Inteligencia social refinada','Encanto genuino'],
+   somb:['Indecisión crónica','Dependencia de aprobación ajena','Evita el conflicto a cualquier costo','Pasivo-agresividad acumulada'],
+   p:{mente:'Mente relacional y estética. Necesita considerar todos los ángulos antes de decidir.',
+      emoc:'Siente la injusticia con intensidad pero evita expresarlo para no generar conflicto.',
+      vinc:'Busca reciprocidad real. La pareja ideal: alguien que lo vea, lo respete y comparta su amor por la belleza.',
+      trab:'Derecho, diplomacia, diseño, relaciones públicas, moda, mediación. Donde la armonía importe.',
+      cont:[['Busca el equilibrio','pero la indecisión crea desequilibrio constante'],['Es diplomático','pero acumula resentimiento que no expresa'],['Parece seguro','pero necesita la aprobación ajena más de lo que admite']],
+      prop:'Crear armonía. Ser puente entre opuestos. Hacer el mundo más justo y más bello.',
+      bio:'Riñones, zona lumbar, sistema urinario. El estrés de las decisiones no tomadas se acumula ahí.'},
+   a10:[{l:'TEMPERAMENTO',v:'Diplomático, estético, alérgico a la injusticia'},{l:'CARÁCTER',v:'Armonioso por fuera; guerra interna por indecisión'},{l:'EN EL AMOR',v:'Necesita reciprocidad y belleza en el vínculo'},{l:'FORTUNA',v:'Atrae abundancia por colaboración y alianzas bien elegidas'},{l:'LO SOCIAL',v:'Conector nato; todos quieren tenerlo cerca'},{l:'ASPIRACIONES',v:'Belleza, justicia y paz en todo lo que hace'},{l:'NECESIDADES',v:'Balance real entre dar y recibir'},{l:'CONFLICTOS',v:'Evita el conflicto hasta que ya no puede contenerlo'},{l:'BIOLOGÍA',v:'Riñones y zona lumbar acumulan el estrés no expresado'},{l:'VISIÓN DEL MUNDO',v:'Puede y debe ser más justo y más bello'}]},
+  {nombre:'Escorpio',emoji:'♏',elemento:'Agua 🌊',planeta:'Plutón',inicio:'10-23',fin:'11-21',
+   esencia:'Escorpio es el signo de lo que está debajo. Donde otros ven la superficie, tú ves la raíz. Llevas en ti una intensidad que pocos pueden sostener y una capacidad de transformación única. Has muerto y renacido varias veces en experiencias que te redefinieron por completo.',
+   fort:['Profundidad psicológica excepcional','Voluntad de hierro','Lealtad absoluta','Intuición que no falla','Capacidad de transformación real','Magnetismo inexplicable'],
+   somb:['Control y manipulación cuando tiene miedo','Venganza como respuesta al dolor','Dificultad para perdonar','Intensidad que puede asfixiar'],
+   p:{mente:'Ve debajo de las palabras, lee entre líneas, detecta lo que no se dice. Nada es accidental para Escorpio.',
+      emoc:'Ama con intensidad que puede abrumar. Necesita aprender a soltar sin sentir que muere.',
+      vinc:'Busca fusión total, no relación superficial. La traición es imperdonable. Cuando se entrega, es para siempre.',
+      trab:'Psicología, medicina, investigación, negocios, cirugía, periodismo de investigación. Todo lo que requiera ir a fondo.',
+      cont:[['Quiere intimidad total','pero el miedo a la vulnerabilidad lo lleva a blindarse'],['Es el más leal','pero puede ser el más destructivo cuando se siente traicionado'],['Tiene un poder enorme','pero a veces lo usa para controlar en lugar de liberar']],
+      prop:'Transformar. Ir donde nadie más se atreve. Traer luz a lo que estaba en la sombra.',
+      bio:'Sistema reproductor, órganos pélvicos, sistema hormonal. Las emociones no procesadas se expresan en esa área.'},
+   a10:[{l:'TEMPERAMENTO',v:'Intenso, perspicaz, nunca superficial'},{l:'CARÁCTER',v:'Voluntad de hierro; nunca olvida una ofensa ni un gesto de amor'},{l:'EN EL AMOR',v:'Todo o nada; la traición es inaceptable'},{l:'FORTUNA',v:'Instinto certero; sabe dónde está el poder real'},{l:'LO SOCIAL',v:'Pocos vínculos pero de lealtad extrema'},{l:'ASPIRACIONES',v:'Transformar, no solo lograr'},{l:'NECESIDADES',v:'Profundidad y verdad en todo'},{l:'CONFLICTOS',v:'No pelea de frente; opera desde la estrategia'},{l:'BIOLOGÍA',v:'Sistema hormonal como zona de expresión emocional'},{l:'VISIÓN DEL MUNDO',v:'Tiene capas ocultas que hay que entender'}]},
+  {nombre:'Sagitario',emoji:'♐',elemento:'Fuego 🔥',planeta:'Júpiter',inicio:'11-22',fin:'12-21',
+   esencia:'Sagitario es el signo del horizonte. Llevas en ti una necesidad de expansión en conocimiento, espacio y experiencia que es tan constitutiva como respirar. Tu optimismo es real, no forzado. Tu honestidad puede doler. Tu libertad no es capricho — es condición de supervivencia.',
+   fort:['Optimismo genuino','Filosofía de vida profunda','Honestidad sin filtros','Visión del panorama grande','Aventura como crecimiento','Humor inteligente'],
+   somb:['Irresponsabilidad ante compromisos','Huye cuando se siente atrapado','Promete más de lo que cumple','Dispersión entre demasiados intereses'],
+   p:{mente:'Filosófica y expansiva. Conecta ideas de distintos campos. El riesgo: falta de profundidad por querer abarcar demasiado.',
+      emoc:'Procesa las emociones moviéndose. Cuando está quieto, las emociones difíciles lo alcanzan.',
+      vinc:'Necesita libertad dentro del amor o se sofoca. La pareja ideal comparte su curiosidad y respeta su independencia.',
+      trab:'Educación, viajes, filosofía, derecho internacional, publicaciones, espiritualidad, emprendimiento.',
+      cont:[['Valora la libertad','pero a veces huye de compromisos que en realidad quiere'],['Es honesto','pero esa honestidad puede ser una forma de no profundizar en lo incómodo'],['Parece que no necesita a nadie','pero la soledad real lo asusta más de lo que admite']],
+      prop:'Encontrar el sentido. Compartirlo. Expandir lo que es posible para sí mismo y para otros.',
+      bio:'Caderas, muslos, hígado. El exceso — de todo — se asienta en esas zonas.'},
+   a10:[{l:'TEMPERAMENTO',v:'Expansivo, optimista, filosófico por naturaleza'},{l:'CARÁCTER',v:'Honesto hasta la crueldad; libre hasta la irresponsabilidad'},{l:'EN EL AMOR',v:'Necesita libertad dentro del vínculo o se asfixia'},{l:'FORTUNA',v:'Grandes flujos en ambas direcciones; viene y va'},{l:'LO SOCIAL',v:'Amigo de todos; profundo con muy pocos'},{l:'ASPIRACIONES',v:'Encontrar el sentido último de todo'},{l:'NECESIDADES',v:'Expansión constante en conocimiento y experiencia'},{l:'CONFLICTOS',v:'Huye o resuelve con humor; raramente profundiza'},{l:'BIOLOGÍA',v:'Caderas y sistema hepático como zonas de acumulación'},{l:'VISIÓN DEL MUNDO',v:'Un aula enorme que hay que recorrer y entender'}]},
+  {nombre:'Capricornio',emoji:'♑',elemento:'Tierra 🌱',planeta:'Saturno',inicio:'12-22',fin:'01-19',
+   esencia:'Capricornio es el signo de quien sabe que nada valioso llega sin esfuerzo. Llevas en ti una disciplina que no necesita explicación y una ambición que no es para impresionar — es para construir algo que dure. Pareces serio, incluso frío. Pero debajo hay una vida interior intensa y sensible que pocas personas llegan a conocer.',
+   fort:['Disciplina real sin alardes','Ambición con sentido de largo plazo','Responsabilidad que genera confianza','Paciencia estratégica','Lealtad inquebrantable','Construye desde cero'],
+   somb:['Rigidez que bloquea el cambio','Exceso de autoexigencia','Dificultad para expresar afecto','Desconfianza inicial','Resentimiento silencioso'],
+   p:{mente:'Estratégica, disciplinada y orientada al largo plazo. Piensa en estructuras, consecuencias y resultados.',
+      emoc:'Control emocional externo muy alto. Por fuera parece firme; por dentro el mundo es mucho más complejo de lo que muestra.',
+      vinc:'Cauteloso para entrar, completamente fiel cuando lo hace. Busca alguien que vea más allá de la seriedad.',
+      trab:'Administración, arquitectura, ingeniería, política, derecho, negocios. Planificación y visión a largo plazo.',
+      cont:[['Quiere conexión','pero la desconfianza inicial aleja a quienes podrían dársela'],['Es fuerte','pero no le gusta fallar y eso puede paralizarlo'],['Cuida a los demás','pero rara vez acepta que lo cuiden a él']],
+      prop:'Construir algo sólido que trascienda. Ser referente de disciplina y carácter. Dejar un legado real.',
+      bio:'Rodillas, huesos, piel. El peso emocional que carga solo se expresa en el cuerpo que lo sostiene.'},
+   a10:[{l:'TEMPERAMENTO',v:'Serio, disciplinado, orientado a resultados reales'},{l:'CARÁCTER',v:'Ambicioso con ética; se exige más que a nadie'},{l:'EN EL AMOR',v:'Cauteloso para entrar; completamente fiel cuando lo hace'},{l:'FORTUNA',v:'Construye patrimonio con visión de largo plazo'},{l:'LO SOCIAL',v:'Respetado más que querido; la calidez tarda en aparecer'},{l:'ASPIRACIONES',v:'Dejar un legado concreto y duradero'},{l:'NECESIDADES',v:'Propósito claro y sentido de avance constante'},{l:'CONFLICTOS',v:'Controla, endurece o desaparece del mapa'},{l:'BIOLOGÍA',v:'Rodillas y huesos como expresión del peso que carga'},{l:'VISIÓN DEL MUNDO',v:'El esfuerzo sostenido tiene recompensa real'}]},
+  {nombre:'Acuario',emoji:'♒',elemento:'Aire 💨',planeta:'Urano',inicio:'01-20',fin:'02-18',
+   esencia:'Acuario es el signo del que piensa diferente — no como pose, sino como constitución. Llevas en ti una visión del mundo que está algunos pasos por delante de lo establecido. Amas a la humanidad en abstracto más de lo que a veces amas a las personas concretas frente a ti. Tu mayor lección: la vulnerabilidad no es pérdida de libertad — es la forma más honesta de conexión.',
+   fort:['Originalidad genuina','Visión sistémica','Independencia de pensamiento','Capacidad de innovar','Compromiso con causas colectivas'],
+   somb:['Distancia emocional que desconecta','Frialdad percibida como indiferencia','Dificultad para sostener intimidad','Desapego que puede lastimar'],
+   p:{mente:'Sistémica, innovadora y no convencional. Ve conexiones que otros no ven. Desconfía de lo establecido por defecto.',
+      emoc:'Alta capacidad intelectual para analizar emociones; baja capacidad de habitarlas.',
+      vinc:'Busca conexión mental antes que emocional. La posesividad lo ahuyenta.',
+      trab:'Tecnología, ciencia, activismo social, innovación, psicología, diseño de sistemas.',
+      cont:[['Ama a la humanidad','pero puede ser distante con las personas que tiene cerca'],['Valora la libertad','pero a veces la convierte en excusa para no comprometerse emocionalmente'],['Parece no necesitar a nadie','pero la desconexión prolongada lo vacía por dentro']],
+      prop:'Reimaginar lo que existe. Pensar lo que aún no se ha pensado. Conectar lo humano con lo posible.',
+      bio:'Tobillos, sistema circulatorio, sistema nervioso periférico. El estrés mental se expresa en los extremos del cuerpo.'},
+   a10:[{l:'TEMPERAMENTO',v:'Independiente, visionario, emocionalmente distante'},{l:'CARÁCTER',v:'Original sin esfuerzo; rebelde por convicción'},{l:'EN EL AMOR',v:'Necesita conexión mental antes que emocional'},{l:'FORTUNA',v:'Gana por innovación y por ir donde nadie más va'},{l:'LO SOCIAL',v:'Ama a la humanidad; mantiene distancia con individuos'},{l:'ASPIRACIONES',v:'Cambiar el mundo, no solo sobrevivir en él'},{l:'NECESIDADES',v:'Libertad total de pensamiento y acción'},{l:'CONFLICTOS',v:'Se desconecta emocionalmente; analiza desde lejos'},{l:'BIOLOGÍA',v:'Sistema circulatorio y tobillos como zonas sensibles'},{l:'VISIÓN DEL MUNDO',v:'Necesita ser reinventado desde sus bases'}]},
+  {nombre:'Piscis',emoji:'♓',elemento:'Agua 🌊',planeta:'Neptuno',inicio:'02-19',fin:'03-20',
+   esencia:'Piscis es el signo de la disolución de los límites — entre tú y el otro, entre lo visible y lo invisible, entre lo que sientes y lo que sientes de quienes te rodean. Tu intuición es casi sobrenatural. Tu creatividad no tiene techo. El reto es aprender a ser tan compasivo contigo mismo como lo eres con los demás.',
+   fort:['Empatía profunda y real','Intuición casi sobrenatural','Creatividad sin fronteras','Compasión genuina','Capacidad de amar sin condiciones'],
+   somb:['Evasión de la realidad difícil','Absorbe el dolor ajeno como propio','Dificultad para poner límites','Confusión entre lo que siente y lo que es real'],
+   p:{mente:'Intuitiva, asociativa y no lineal. Piensa en imágenes y emociones antes que en conceptos. Necesita silencio.',
+      emoc:'Siente todo — lo propio, lo ajeno y lo que está en el aire. Aprender a filtrar esa esponja es el trabajo de su vida.',
+      vinc:'Se entrega con una profundidad que pocos entienden. El peligro: idealizar hasta no ver a la persona real.',
+      trab:'Arte, música, psicología, trabajo social, espiritualidad, escritura, cine. Lo que traspase el velo de lo visible.',
+      cont:[['Quiere ayudar a todos','pero se pierde en los demás y se olvida de sí mismo'],['Tiene intuición extraordinaria','pero a veces prefiere no verla para no enfrentar lo que revela'],['Busca trascendencia','pero también tiene necesidades concretas que no siempre atiende']],
+      prop:'Trascender. Conectar lo humano con algo más grande. Ser puente entre lo visible y lo invisible.',
+      bio:'Pies, sistema linfático, sistema inmune. Las emociones no procesadas se acumulan en los extremos.'},
+   a10:[{l:'TEMPERAMENTO',v:'Empático, soñador, poroso a las emociones ajenas'},{l:'CARÁCTER',v:'Altruista sin límites; puede perderse en los demás'},{l:'EN EL AMOR',v:'Ama con una profundidad que pocos entienden ni merecen'},{l:'FORTUNA',v:'La abundancia llega conectado con su propósito creativo'},{l:'LO SOCIAL',v:'Absorbe el estado emocional de quienes lo rodean'},{l:'ASPIRACIONES',v:'Trascender, conectar con algo más grande'},{l:'NECESIDADES',v:'Silencio, belleza y conexión espiritual real'},{l:'CONFLICTOS',v:'Huye, se disuelve o se sacrifica; raramente confronta'},{l:'BIOLOGÍA',v:'Pies y sistema linfático como zonas de acumulación'},{l:'VISIÓN DEL MUNDO',v:'Un velo detrás del cual hay algo más verdadero'}]}
 ];
 
-// ═══════════════════════════════════
-// PREGUNTAS DEL TEST — 3 por área
-// ═══════════════════════════════════
-const PREGUNTAS = {
-  amor: [
-    { texto:'¿Qué es lo primero que buscas en una pareja?', opciones:[{txt:'Lealtad y compromiso',psico:'Apego seguro'},{txt:'Pasión e intensidad',psico:'Vínculo ansioso'},{txt:'Diálogo y entendimiento',psico:'Conexión cognitiva'},{txt:'Paz y estabilidad',psico:'Apego evitativo'}] },
-    { texto:'¿Cómo actúas cuando te lastiman en una relación?', opciones:[{txt:'Lo digo directamente',psico:'Asertivo'},{txt:'Me alejo sin explicar',psico:'Evitativo'},{txt:'Guardo silencio y espero',psico:'Pasivo-reactivo'},{txt:'Lo trabajo internamente',psico:'Introspectivo'}] },
-    { texto:'¿Qué es para ti el amor?', opciones:[{txt:'Un acto de voluntad diario',psico:'Compromiso consciente'},{txt:'Una fuerza que se siente o no',psico:'Romantismo intenso'},{txt:'Un espacio de crecimiento mutuo',psico:'Amor maduro'},{txt:'Una necesidad profunda del alma',psico:'Dependencia afectiva'}] }
+const HORAS={
+  madrugada:{e:'🌑',l:'Madrugada (12am–5am)',d:'Nacer en la madrugada imprime alta introspección, mente profunda y analítica, pensamiento estratégico antes de actuar y conexión interna marcada. Son personas que ven lo que otros no ven y procesan el mundo desde adentro hacia afuera.'},
+  amanecer:{e:'🌅',l:'Amanecer (5am–8am)',d:'Nacer al amanecer trae energía de comienzo y renovación. Hay optimismo natural, capacidad de ver posibilidades donde otros ven obstáculos y vitalidad que se recarga con la luz. Suelen ser personas que inspiran sin proponérselo.'},
+  manana:{e:'☀️',l:'Mañana (8am–12pm)',d:'La energía de la mañana es activa, social y orientada a la acción concreta. Quienes nacen en este horario suelen ser prácticos, directos y con facilidad para funcionar en el mundo externo.'},
+  tarde:{e:'🌤',l:'Tarde (12pm–6pm)',d:'Nacer en la tarde trae un perfil equilibrado entre el mundo interno y el externo. Hay capacidad de reflexión sin perder la acción, y tendencia a buscar el balance en todo.'},
+  noche:{e:'🌙',l:'Noche (6pm–12am)',d:'La energía nocturna imprime profundidad emocional, sensibilidad elevada y tendencia a la introspección. Quienes nacen de noche suelen tener vida interior rica y percepción aguda de los matices.'},
+  desconocida:{e:'✨',l:'Hora no conocida',d:'Sin la hora exacta, el perfil se basa en tu signo solar y tu naturaleza expresada a través del test. La hora matiza, pero no define quién eres.'}
+};
+
+function getCultura(pais){
+  const caribe=['CU','DO','PR'];
+  const norte=['MX','US','GT','HN','SV','NI','CR','PA'];
+  const andinos=['CO','VE','EC','PE','BO','CL'];
+  const cono=['AR','UY','PY'];
+  if(caribe.includes(pais))return'Criado en el Caribe, tu cultura lleva ritmo, expresión emocional directa y una resiliencia particular que el sol y la historia construyeron juntos.';
+  if(norte.includes(pais))return'Tu contexto latinoamericano añade una capa de colectivismo familiar y resiliencia ante la incertidumbre que matiza la expresión de tu signo.';
+  if(andinos.includes(pais))return'El contexto andino añade identidad colectiva fuerte, espiritualidad presente y capacidad de adaptación que colorea tu signo de manera única.';
+  if(cono.includes(pais))return'El contexto del Cono Sur — con su herencia europea y tendencia a la introspección — añade profundidad analítica a la expresión de tu signo.';
+  if(pais==='ES')return'Nacer en España añade orgullo identitario, expresión emocional mediterránea y una cultura que valora tanto el pasado como el presente.';
+  return'Tu contexto cultural de nacimiento es parte del filtro único a través del cual tu signo se expresa. La cultura describe el idioma en que ese patrón habla.';
+}
+
+const PREGUNTAS={
+  amor:[
+    {txt:'¿Qué buscas realmente en una pareja?',ops:[{t:'Lealtad y compromiso profundo',p:'Apego seguro'},{t:'Pasión e intensidad real',p:'Vínculo intenso'},{t:'Conexión mental y diálogo',p:'Amor intelectual'},{t:'Paz y estabilidad cotidiana',p:'Necesidad de calma'}]},
+    {txt:'Cuando alguien te lastima en una relación, ¿qué haces?',ops:[{t:'Lo digo directamente',p:'Comunicación asertiva'},{t:'Me alejo sin explicar',p:'Distanciamiento evitativo'},{t:'Lo guardo y espero',p:'Represión relacional'},{t:'Lo proceso antes de hablar',p:'Reflexión antes de la acción'}]},
+    {txt:'¿Qué describe mejor tu forma de amar?',ops:[{t:'Con hechos concretos más que palabras',p:'Amor en actos'},{t:'Con intensidad que a veces asusta',p:'Amor apasionado'},{t:'Con paciencia y constancia',p:'Amor estable'},{t:'Con libertad dentro del vínculo',p:'Amor independiente'}]}
   ],
-  fortuna: [
-    { texto:'¿Cómo tomas decisiones económicas importantes?', opciones:[{txt:'Analizo datos y planeo',psico:'Racional-estratégico'},{txt:'Sigo mi intuición',psico:'Intuitivo'},{txt:'Consulto a alguien de confianza',psico:'Dependiente-social'},{txt:'Actúo rápido antes de dudarlo',psico:'Impulsivo'}] },
-    { texto:'Si recibes dinero extra, ¿qué haces primero?', opciones:[{txt:'Lo ahorro o invierto',psico:'Previsor'},{txt:'Lo gasto en algo que disfrute',psico:'Hedonista'},{txt:'Ayudo a alguien que lo necesita',psico:'Altruista'},{txt:'Lo guardo por si acaso',psico:'Ansioso-precavido'}] },
-    { texto:'¿Qué relación tienes con el dinero?', opciones:[{txt:'Es una herramienta de libertad',psico:'Autonomía'},{txt:'Es seguridad y tranquilidad',psico:'Apego a la estabilidad'},{txt:'Es una responsabilidad',psico:'Deber'},{txt:'Es energía que fluye y regresa',psico:'Abundancia mental'}] }
+  fortuna:[
+    {txt:'¿Cómo tomas decisiones económicas importantes?',ops:[{t:'Analizo, planifico y actúo',p:'Estratégico-racional'},{t:'Sigo mi intuición',p:'Intuitivo financiero'},{t:'Consulto antes de decidir',p:'Colaborativo'},{t:'Actúo rápido antes de dudarlo',p:'Impulsivo'}]},
+    {txt:'¿Qué relación tienes con el dinero?',ops:[{t:'Es una herramienta de libertad',p:'Autonomía financiera'},{t:'Es seguridad y tranquilidad',p:'Apego a la estabilidad'},{t:'Es energía que fluye si confío',p:'Mentalidad de abundancia'},{t:'Es una responsabilidad que pesa',p:'Deber y carga'}]},
+    {txt:'¿Qué te frena económicamente?',ops:[{t:'El miedo a arriesgar',p:'Aversión al riesgo'},{t:'La falta de disciplina en el gasto',p:'Impulsividad económica'},{t:'La incertidumbre del entorno',p:'Factores externos'},{t:'No saber exactamente qué quiero',p:'Falta de claridad'}]}
   ],
-  temperamento: [
-    { texto:'Cuando algo no sale como planeaste, ¿cómo reaccionas?', opciones:[{txt:'Me frustro pero lo corrijo rápido',psico:'Resiliente activo'},{txt:'Analizo qué salió mal',psico:'Reflexivo-analítico'},{txt:'Me toma tiempo reponerme',psico:'Procesador lento'},{txt:'Lo acepto y sigo adelante',psico:'Adaptativo'}] },
-    { texto:'¿Cómo describirías tu energía habitual?', opciones:[{txt:'Alta y constante',psico:'Hiperactivo-orientado'},{txt:'Variable según el contexto',psico:'Reactivo-emocional'},{txt:'Tranquila y sostenida',psico:'Flegmático'},{txt:'Intensa en ráfagas',psico:'Cíclico-impulsivo'}] },
-    { texto:'¿Cómo sueles tomar decisiones en el día a día?', opciones:[{txt:'Por lógica y análisis',psico:'Cognitivo dominante'},{txt:'Por lo que siento en el momento',psico:'Emocional dominante'},{txt:'Por lo que sea más práctico',psico:'Pragmático'},{txt:'Mezclo todo lo anterior',psico:'Integrado'}] }
+  temperamento:[
+    {txt:'Cuando algo no sale como planeaste, ¿cómo reaccionas?',ops:[{t:'Me frustro pero lo corrijo rápido',p:'Resiliente activo'},{t:'Analizo qué falló antes de actuar',p:'Reflexivo-analítico'},{t:'Me toma tiempo reponerme',p:'Procesador emocional lento'},{t:'Lo acepto y encuentro otro camino',p:'Adaptativo flexible'}]},
+    {txt:'¿Qué describe mejor tu energía habitual?',ops:[{t:'Alta y sostenida; siempre en marcha',p:'Energía constante'},{t:'Variable; depende de lo que siento',p:'Energía reactiva'},{t:'Tranquila y profunda',p:'Energía flegmática'},{t:'Intensa pero en ráfagas',p:'Energía cíclica'}]},
+    {txt:'¿Cómo tomas decisiones en el día a día?',ops:[{t:'Por lógica y análisis',p:'Cognitivo dominante'},{t:'Por lo que siento en el momento',p:'Emocional dominante'},{t:'Por lo más práctico y eficiente',p:'Pragmático'},{t:'Combino intuición y análisis',p:'Integrado'}]}
   ],
-  conflictos: [
-    { texto:'Cuando alguien te decepciona, ¿qué haces?', opciones:[{txt:'Se lo digo en el momento',psico:'Directo-asertivo'},{txt:'Lo guardo y se me va acumulando',psico:'Represión emocional'},{txt:'Me alejo gradualmente',psico:'Distanciamiento'},{txt:'Busco entender por qué lo hizo',psico:'Empático-comprensivo'}] },
-    { texto:'¿Cuál es tu mayor frustración en la vida?', opciones:[{txt:'No poder controlar lo que pasa',psico:'Necesidad de control'},{txt:'No ser comprendido por los demás',psico:'Aislamiento emocional'},{txt:'Sentir que no avanzo suficientemente rápido',psico:'Autoexigencia'},{txt:'Ver injusticias sin poder cambiarlas',psico:'Sensibilidad moral elevada'}] },
-    { texto:'¿Cómo terminas una discusión?', opciones:[{txt:'Cuando la otra persona cede',psico:'Dominante'},{txt:'Cuando llegamos a un acuerdo',psico:'Colaborativo'},{txt:'Me voy antes de que escale',psico:'Evitativo'},{txt:'Me quedo rumiándolo internamente',psico:'Rumiativo'}] }
+  conflictos:[
+    {txt:'¿Cuál es tu mayor fuente de frustración?',ops:[{t:'No poder controlar lo que pasa',p:'Necesidad de control'},{t:'Sentir que no me comprenden',p:'Aislamiento emocional'},{t:'No avanzar al ritmo que quiero',p:'Autoexigencia elevada'},{t:'Ver injusticias que no puedo cambiar',p:'Sensibilidad moral'}]},
+    {txt:'Cuando alguien te decepciona profundamente, ¿qué haces?',ops:[{t:'Se lo digo en el momento',p:'Confrontación directa'},{t:'Lo guardo y se acumula',p:'Represión acumulativa'},{t:'Me alejo gradualmente',p:'Distanciamiento progresivo'},{t:'Busco entender antes de juzgar',p:'Comprensión empática'}]},
+    {txt:'¿Cómo describes tu manejo del enojo?',ops:[{t:'Lo expreso y se pasa rápido',p:'Expresión impulsiva directa'},{t:'Lo controlo pero se nota',p:'Control con tensión interna'},{t:'Lo guardo y luego exploto',p:'Represión con estallido posterior'},{t:'Lo proceso solo antes de actuar',p:'Procesamiento interno'}]}
   ],
-  necesidades: [
-    { texto:'¿Qué necesitas para sentirte bien en tu vida?', opciones:[{txt:'Estabilidad y certeza',psico:'Apego a la seguridad'},{txt:'Libertad y movimiento',psico:'Autonomía vital'},{txt:'Vínculos profundos',psico:'Necesidad afectiva'},{txt:'Un propósito claro',psico:'Orientado al sentido'}] },
-    { texto:'¿Qué te recarga cuando estás agotado?', opciones:[{txt:'Estar solo y en silencio',psico:'Introvertido'},{txt:'Estar con gente que me da energía',psico:'Extrovertido'},{txt:'Moverme o hacer ejercicio',psico:'Corporal-kinestésico'},{txt:'Hacer algo creativo',psico:'Expresivo-creativo'}] },
-    { texto:'¿Qué necesita tu alma que pocas veces te das?', opciones:[{txt:'Tiempo sin obligaciones',psico:'Descanso no culposo'},{txt:'Conexión emocional verdadera',psico:'Intimidad'},{txt:'Reconocimiento de lo que hago',psico:'Validación externa'},{txt:'Silencio y reflexión profunda',psico:'Espiritualidad interior'}] }
+  necesidades:[
+    {txt:'¿Qué necesitas para sentirte bien contigo mismo?',ops:[{t:'Certeza y estabilidad',p:'Necesidad de seguridad'},{t:'Libertad para moverme y decidir',p:'Necesidad de autonomía'},{t:'Vínculos profundos y reales',p:'Necesidad de conexión'},{t:'Un propósito que me mueva',p:'Necesidad de sentido'}]},
+    {txt:'¿Qué te recarga cuando estás en el límite?',ops:[{t:'Estar solo y en silencio',p:'Recarga introvertida'},{t:'Estar con personas que me energizan',p:'Recarga extrovertida'},{t:'Moverme o hacer deporte',p:'Recarga corporal'},{t:'Crear algo con mi mente o mis manos',p:'Recarga creativa'}]},
+    {txt:'¿Qué es lo que menos te das y más necesitas?',ops:[{t:'Tiempo sin obligaciones ni culpa',p:'Permiso al descanso'},{t:'Conexión emocional verdadera',p:'Intimidad real'},{t:'Reconocimiento de lo que hago',p:'Validación externa'},{t:'Espacio para reflexionar y conocerme',p:'Autoconocimiento activo'}]}
   ],
-  social: [
-    { texto:'¿Cómo te sientes en grupos de personas?', opciones:[{txt:'Cómodo/a, es mi elemento',psico:'Extrovertido social'},{txt:'Me adapto pero me cansa',psico:'Ambivertido'},{txt:'Prefiero un ambiente pequeño',psico:'Introvertido selectivo'},{txt:'Depende mucho del grupo',psico:'Contextual-sensible'}] },
-    { texto:'¿Qué rol tiendes a tomar en tu entorno social?', opciones:[{txt:'El que lidera o propone',psico:'Líder-dominante'},{txt:'El que escucha y apoya',psico:'Soporte empático'},{txt:'El que conecta a otros entre sí',psico:'Conector social'},{txt:'El que observa y analiza',psico:'Observador periférico'}] },
-    { texto:'¿Qué tan importante es lo que piensan de ti?', opciones:[{txt:'Mucho; me afecta directamente',psico:'Alta sensibilidad a evaluación social'},{txt:'Lo considero pero no me define',psico:'Autoestima estable'},{txt:'Poco; hago lo que creo correcto',psico:'Autonomía conductual'},{txt:'Depende de quién lo piense',psico:'Selectivo-valorativo'}] }
+  social:[
+    {txt:'¿Cómo te sientes en grupos grandes?',ops:[{t:'En mi elemento; me energiza',p:'Extrovertido social'},{t:'Me adapto pero me agota',p:'Ambivertido'},{t:'Prefiero contextos pequeños',p:'Introvertido selectivo'},{t:'Depende mucho de quiénes son',p:'Contextual selectivo'}]},
+    {txt:'¿Qué rol tomas naturalmente en tu entorno?',ops:[{t:'Propongo y lidero',p:'Líder natural'},{t:'Escucho y apoyo',p:'Soporte empático'},{t:'Conecto a otros entre sí',p:'Conector social'},{t:'Observo y analizo',p:'Observador estratégico'}]},
+    {txt:'¿Qué tanto te afecta lo que piensan de ti?',ops:[{t:'Mucho; lo pienso más de lo que quisiera',p:'Alta sensibilidad social'},{t:'Lo considero pero no me define',p:'Autoestima estable'},{t:'Poco; priorizo lo que creo correcto',p:'Autonomía conductual'},{t:'Solo importa la opinión de quienes respeto',p:'Selectivo-valorativo'}]}
   ],
-  aspiraciones: [
-    { texto:'¿Cuál es tu mayor ambición en la vida?', opciones:[{txt:'Logros concretos y reconocibles',psico:'Orientado al logro externo'},{txt:'Paz interior y bienestar',psico:'Orientado al bienestar'},{txt:'Impactar positivamente en otros',psico:'Prosocial-altruista'},{txt:'Crear algo que perdure',psico:'Orientado al legado'}] },
-    { texto:'¿Qué te impide avanzar hacia lo que quieres?', opciones:[{txt:'El miedo al fracaso',psico:'Evitación del fracaso'},{txt:'La falta de tiempo o recursos',psico:'Factores externos'},{txt:'La duda sobre si es lo correcto',psico:'Indecisión valorativa'},{txt:'La sensación de no merecer',psico:'Baja autoeficacia'}] },
-    { texto:'¿Cómo imaginas tu vida ideal en 5 años?', opciones:[{txt:'Con estabilidad y logros sólidos',psico:'Seguridad proyectada'},{txt:'Llena de experiencias y crecimiento',psico:'Apertura a la experiencia'},{txt:'Con vínculos profundos y amor',psico:'Prioridad relacional'},{txt:'Contribuyendo a algo más grande',psico:'Trascendencia'}] }
+  aspiraciones:[
+    {txt:'¿Qué es lo que más te mueve en la vida?',ops:[{t:'Lograr metas concretas y visibles',p:'Orientado al logro'},{t:'Vivir con paz y bienestar',p:'Orientado al bienestar'},{t:'Impactar positivamente en otros',p:'Orientado al impacto'},{t:'Crear algo que trascienda',p:'Orientado al legado'}]},
+    {txt:'¿Qué te impide ir por lo que quieres?',ops:[{t:'El miedo a fracasar',p:'Evitación del fracaso'},{t:'No saber exactamente qué quiero',p:'Indecisión de propósito'},{t:'La duda de si lo merezco',p:'Baja autoeficacia'},{t:'El momento o los recursos',p:'Factores externos'}]},
+    {txt:'¿Cómo imaginas tu vida bien vivida?',ops:[{t:'Con logros sólidos y reconocibles',p:'Éxito externo'},{t:'Con experiencias y crecimiento constante',p:'Apertura a la experiencia'},{t:'Con vínculos profundos y amor real',p:'Prioridad relacional'},{t:'Contribuyendo a algo más grande que yo',p:'Trascendencia'}]}
   ],
-  mundo: [
-    { texto:'¿Cómo ves la naturaleza humana en general?', opciones:[{txt:'Esencialmente buena, aunque se desvíe',psico:'Optimismo antropológico'},{txt:'Compleja y contradictoria',psico:'Realismo existencial'},{txt:'Guiada por el interés propio',psico:'Escepticismo social'},{txt:'Capaz de evolucionar si se lo propone',psico:'Humanismo progresivo'}] },
-    { texto:'¿Qué le da sentido a tu vida?', opciones:[{txt:'Crecer y mejorar constantemente',psico:'Desarrollo personal'},{txt:'Amar y ser amado',psico:'Apego central'},{txt:'Contribuir a algo mayor que yo',psico:'Trascendencia colectiva'},{txt:'Vivir con autenticidad',psico:'Congruencia interna'}] },
-    { texto:'¿Cómo afrontas la incertidumbre del futuro?', opciones:[{txt:'La planifico para reducirla',psico:'Control cognitivo'},{txt:'La acepto como parte de la vida',psico:'Tolerancia a la ambigüedad'},{txt:'Me genera ansiedad que gestiono',psico:'Ansiedad funcional'},{txt:'La transformo en curiosidad',psico:'Apertura resiliente'}] }
+  mundo:[
+    {txt:'¿Cómo ves a las personas en general?',ops:[{t:'Esencialmente buenas aunque se desvíen',p:'Optimismo humano'},{t:'Complejas y contradictorias',p:'Realismo existencial'},{t:'Guiadas principalmente por el interés propio',p:'Escepticismo social'},{t:'Capaces de evolucionar si se lo proponen',p:'Humanismo progresivo'}]},
+    {txt:'¿Qué le da sentido a tu vida?',ops:[{t:'Crecer y mejorar constantemente',p:'Desarrollo personal'},{t:'Amar y ser amado',p:'Amor como centro'},{t:'Aportar a algo mayor que yo',p:'Trascendencia colectiva'},{t:'Vivir con autenticidad total',p:'Congruencia interna'}]},
+    {txt:'¿Cómo manejas la incertidumbre?',ops:[{t:'La planifico para reducirla',p:'Control anticipatorio'},{t:'La acepto como parte de la vida',p:'Tolerancia a la ambigüedad'},{t:'Me genera ansiedad que gestiono',p:'Ansiedad funcional'},{t:'La transformo en curiosidad',p:'Apertura resiliente'}]}
   ]
 };
 
-// ═══════════════════════════════════
-// ESTADO GLOBAL
-// ═══════════════════════════════════
-let datosUsuario = { dia:null, mes:null, sexo:'', signo:null };
-let respuestas = {};
-let esferasRespondidas = { amor:false, fortuna:false, temperamento:false, conflictos:false, necesidades:false, social:false, aspiraciones:false, mundo:false };
-let esferaActual = '';
-const TOTAL_PANTALLAS = 8;
-const pantallaIdx = { p1:1, p2:2, p3:3, p4:4, p5:5, p6:6, p7:7, p8:8 };
+// ══════════════════════════════════════════
+// ESTADO
+// ══════════════════════════════════════════
+let U={dia:null,mes:null,hora:'',pais:'',sexo:'',signo:null};
+let R={};
+let HECHO={amor:false,fortuna:false,temperamento:false,conflictos:false,necesidades:false,social:false,aspiraciones:false,mundo:false};
+let AREA='';
+const TOTAL=8;
+const IDX={p1:1,p2:2,p3:3,p4:4,p5:5,p6:6,p7:7,p8:8};
+const ALABS={amor:'💖 AMOR Y VÍNCULOS',fortuna:'💰 FORTUNA Y RECURSOS',temperamento:'🔥 TEMPERAMENTO Y CARÁCTER',conflictos:'⚡ CONFLICTOS Y FRUSTRACIONES',necesidades:'🧘 NECESIDADES PROFUNDAS',social:'🤝 LO SOCIAL',aspiraciones:'🚀 ASPIRACIONES Y PROPÓSITO',mundo:'🌍 CONCEPCIÓN DEL MUNDO'};
 
-// ═══════════════════════════════════
-// NAVEGACIÓN
-// ═══════════════════════════════════
-function ir(id) {
-  document.querySelectorAll('.portada').forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-  actualizarSteps(id);
-}
+function ir(id){document.querySelectorAll('.pant').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);rSteps(id);}
+function rSteps(pid){const idx=IDX[pid];if(!idx)return;for(let i=1;i<=TOTAL;i++){const el=document.getElementById('st'+i);if(!el)continue;el.innerHTML='';for(let j=1;j<=TOTAL;j++){const d=document.createElement('div');d.className='dot'+(j===idx?' active':j<idx?' done':'');el.appendChild(d);}}}
 
-function actualizarSteps(id) {
-  const idx = pantallaIdx[id];
-  if(!idx) return;
-  ['steps1','steps2','steps3','steps4','steps5','steps6','steps7','steps8'].forEach((sId, i) => {
-    const el = document.getElementById(sId);
-    if(!el) return;
-    el.innerHTML = '';
-    for(let j=1; j<=TOTAL_PANTALLAS; j++) {
-      const d = document.createElement('div');
-      d.className = 'step-dot' + (j === idx ? ' active' : j < idx ? ' done' : '');
-      el.appendChild(d);
-    }
-  });
-  // también actualiza la pantalla activa
-  const targetSteps = document.getElementById('steps' + idx);
-  // ya lo hace el loop anterior
-}
+function obtenerSigno(dia,mes){const f=`${String(mes).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;for(let s of SIGNOS){if(s.inicio<=s.fin){if(f>=s.inicio&&f<=s.fin)return s;}else{if(f>=s.inicio||f<=s.fin)return s;}}return SIGNOS[0];}
 
-function obtenerSigno(dia, mes) {
-  const fecha = `${String(mes).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
-  for(let s of SIGNOS) {
-    if(s.inicio <= s.fin) { if(fecha >= s.inicio && fecha <= s.fin) return s; }
-    else { if(fecha >= s.inicio || fecha <= s.fin) return s; }
-  }
-  return SIGNOS[0];
-}
-
-function comenzar() {
-  const dia = parseInt(document.getElementById('diaNac').value);
-  const mes = parseInt(document.getElementById('mesNac').value);
-  const sexo = document.getElementById('sexo').value;
-  if(!dia || dia < 1 || dia > 31) { alert('Ingresa un día válido (1–31)'); return; }
-  if(!mes) { alert('Selecciona tu mes de nacimiento'); return; }
-  if(!sexo) { alert('Selecciona con qué te identificas'); return; }
-  datosUsuario = { dia, mes, sexo, signo: obtenerSigno(dia, mes) };
+function comenzar(){
+  const dia=parseInt(document.getElementById('dia').value);
+  const mes=parseInt(document.getElementById('mes').value);
+  const hora=document.getElementById('hora').value;
+  const pais=document.getElementById('pais').value;
+  const sexo=document.getElementById('sexo').value;
+  if(!dia||dia<1||dia>31){alert('Ingresa un día válido (1–31)');return;}
+  if(!mes){alert('Selecciona tu mes');return;}
+  if(!hora){alert('Selecciona tu hora aproximada de nacimiento');return;}
+  if(!pais){alert('Selecciona tu país de nacimiento');return;}
+  if(!sexo){alert('Selecciona con qué te identificas');return;}
+  U={dia,mes,hora,pais,sexo,signo:obtenerSigno(dia,mes)};
   ir('p2');
 }
 
-// ═══════════════════════════════════
-// ESFERAS / PREGUNTAS
-// ═══════════════════════════════════
-const ESFERA_LABELS = {
-  amor:'💖 AMOR Y VÍNCULOS', fortuna:'💰 FORTUNA Y RECURSOS',
-  temperamento:'🔥 TEMPERAMENTO Y CARÁCTER', conflictos:'⚡ CONFLICTOS Y FRUSTRACIONES',
-  necesidades:'🧘 NECESIDADES PROFUNDAS', social:'🤝 LO SOCIAL',
-  aspiraciones:'🚀 ASPIRACIONES Y PROPÓSITO', mundo:'🌍 CONCEPCIÓN DEL MUNDO'
-};
-
-function abrirEsfera(esfera) {
-  esferaActual = esfera;
-  document.getElementById('tituloEsfera').textContent = ESFERA_LABELS[esfera];
-  const preguntas = PREGUNTAS[esfera];
-  const letras = ['A','B','C','D'];
-  let html = '';
-  preguntas.forEach((p, i) => {
-    html += `<div class="pregunta-box"><div class="pregunta-texto">${i+1}. ${p.texto}</div>`;
-    p.opciones.forEach((o, j) => {
-      html += `<div class="opcion" id="opc_${esfera}_${i}_${j}" onclick="seleccionarOpcion('${esfera}',${i},${j})"><span class="opcion-letra">${letras[j]}</span>${o.txt}</div>`;
-    });
-    html += '</div>';
+function abrirEsfera(area){
+  AREA=area;
+  document.getElementById('qTitulo').textContent=ALABS[area];
+  const pregs=PREGUNTAS[area];const ls=['A','B','C','D'];let html='';
+  pregs.forEach((p,i)=>{
+    html+=`<div class="preg-box"><div class="preg-txt">${i+1}. ${p.txt}</div>`;
+    p.ops.forEach((o,j)=>{const s=(R[area]&&R[area][i]===j)?'sel':'';html+=`<div class="opcion ${s}" id="o_${area}_${i}_${j}" onclick="elegir('${area}',${i},${j})"><span class="opc-letra">${ls[j]}</span>${o.t}</div>`;});
+    html+='</div>';
   });
-  document.getElementById('preguntasContainer').innerHTML = html;
-  if(!respuestas[esfera]) respuestas[esfera] = [];
-  // Restaurar selecciones previas
-  respuestas[esfera].forEach((sel, i) => {
-    if(sel !== undefined) document.getElementById(`opc_${esfera}_${i}_${sel}`)?.classList.add('selected');
-  });
-  ir('pPreguntas');
+  document.getElementById('qContenido').innerHTML=html;
+  ir('pQ');
 }
 
-function seleccionarOpcion(esfera, iPregunta, iOpcion) {
-  const preguntas = PREGUNTAS[esfera];
-  for(let j=0; j<preguntas[iPregunta].opciones.length; j++) {
-    document.getElementById(`opc_${esfera}_${iPregunta}_${j}`)?.classList.remove('selected');
-  }
-  document.getElementById(`opc_${esfera}_${iPregunta}_${iOpcion}`)?.classList.add('selected');
-  if(!respuestas[esfera]) respuestas[esfera] = [];
-  respuestas[esfera][iPregunta] = iOpcion;
-}
+function elegir(area,ip,io){const pregs=PREGUNTAS[area];for(let j=0;j<pregs[ip].ops.length;j++){document.getElementById(`o_${area}_${ip}_${j}`)?.classList.remove('sel');}document.getElementById(`o_${area}_${ip}_${io}`)?.classList.add('sel');if(!R[area])R[area]=[];R[area][ip]=io;}
 
-function guardarEsfera() {
-  const preguntas = PREGUNTAS[esferaActual];
-  const resp = respuestas[esferaActual] || [];
-  const respondidas = resp.filter(r => r !== undefined).length;
-  if(respondidas < preguntas.length) { alert(`Responde las ${preguntas.length} preguntas de esta área`); return; }
-  esferasRespondidas[esferaActual] = true;
-  volverAEsferas();
-}
+function guardarArea(){const pregs=PREGUNTAS[AREA];const resp=R[AREA]||[];if(resp.filter(r=>r!==undefined).length<pregs.length){alert(`Responde las ${pregs.length} preguntas`);return;}HECHO[AREA]=true;volverAreas();}
 
-function volverAEsferas() {
-  actualizarEstadoEsferas();
+function volverAreas(){
+  let comp=0;
+  for(let e in HECHO){const eId=e.charAt(0).toUpperCase()+e.slice(1);const el=document.getElementById(`esf${eId}`);const st=document.getElementById(`st${eId}`);if(HECHO[e]){comp++;el?.classList.add('sel');if(st)st.textContent='Completado ✔';}else{el?.classList.remove('sel');if(st)st.textContent='Pendiente';}}
+  const pct=Math.round(comp/Object.keys(HECHO).length*100);
+  const fill=document.getElementById('progFill');const label=document.getElementById('progLabel');
+  if(fill)fill.style.width=pct+'%';if(label)label.textContent=`${comp} DE ${Object.keys(HECHO).length} ÁREAS COMPLETADAS`;
+  document.getElementById('btnSig2').disabled=comp<Object.keys(HECHO).length;
   ir('p2');
 }
 
-function actualizarEstadoEsferas() {
-  let completadas = 0;
-  for(let e in esferasRespondidas) {
-    const eId = e.charAt(0).toUpperCase() + e.slice(1);
-    const elEsfera = document.getElementById(`esf${eId}`);
-    const elSt = document.getElementById(`st${eId}`);
-    if(esferasRespondidas[e]) {
-      completadas++;
-      elEsfera?.classList.add('selected');
-      if(elSt) elSt.textContent = 'Completado ✔';
-    } else {
-      elEsfera?.classList.remove('selected');
-      if(elSt) elSt.textContent = 'Pendiente';
-    }
-  }
-  const total = Object.keys(esferasRespondidas).length;
-  const pct = Math.round((completadas/total)*100);
-  const fill = document.getElementById('progresoFill');
-  const label = document.getElementById('progresoLabel');
-  if(fill) fill.style.width = pct + '%';
-  if(label) label.textContent = `${completadas} DE ${total} ÁREAS COMPLETADAS`;
-  const btn = document.getElementById('btnContinuar2');
-  if(btn) btn.disabled = completadas < total;
-  if(completadas === total && btn) { construirSigno(); }
+function prepararSigno(){
+  const s=U.signo;const h=HORAS[U.hora]||HORAS.desconocida;
+  document.getElementById('s3emoji').textContent=s.emoji;
+  document.getElementById('s3nombre').textContent=s.nombre;
+  document.getElementById('s3sub').textContent=`✦ ${s.elemento} · ${s.planeta} ✦`;
+  document.getElementById('s3hora').innerHTML=`${h.e} ${h.l}`;
+  document.getElementById('s3esencia').textContent=s.esencia;
+  document.getElementById('s3fort').innerHTML=s.fort.map(f=>`<span class="tag g">${f}</span>`).join('');
+  document.getElementById('s3somb').innerHTML=s.somb.map(f=>`<span class="tag r">${f}</span>`).join('');
 }
 
-// ═══════════════════════════════════
-// CONSTRUIR PANTALLA 3: SIGNO
-// ═══════════════════════════════════
-function construirSigno() {
-  const s = datosUsuario.signo;
-  if(!s) return;
-  document.getElementById('signoEmoji').textContent = s.emoji;
-  document.getElementById('signoNombre').textContent = s.nombre;
-  document.getElementById('signoElemento').textContent = `✦ ${s.elemento} · ${s.planeta} · ${s.polaridad} ✦`;
-  document.getElementById('signoPred').textContent = s.prediccion2026;
+function construirP4(){
+  const s=U.signo;const h=HORAS[U.hora]||HORAS.desconocida;const cult=getCultura(U.pais);const p=s.p;
+  let html='';
+  html+=`<div class="ps"><div class="ps-t">${h.e} NACISTE EN LA ${h.l.split('(')[0].trim().toUpperCase()}</div><div class="ps-x">${h.d}</div></div>`;
+  html+=`<div class="ps"><div class="ps-t">🌍 TU CONTEXTO DE NACIMIENTO</div><div class="ps-x">${cult}</div></div>`;
+  html+=`<div class="ps"><div class="ps-t">🧠 TU MENTE</div><div class="ps-x">${p.mente}</div></div>`;
+  html+=`<div class="ps"><div class="ps-t">💙 TU MUNDO EMOCIONAL</div><div class="ps-x">${p.emoc}</div></div>`;
+  html+=`<div class="ps"><div class="ps-t">💖 EN EL AMOR Y LOS VÍNCULOS</div><div class="ps-x">${p.vinc}</div></div>`;
+  html+=`<div class="ps"><div class="ps-t">💼 EN EL TRABAJO</div><div class="ps-x">${p.trab}</div></div>`;
+  html+=`<div class="ps"><div class="ps-t">⚖️ TUS CONTRADICCIONES (lo más interesante)</div>`;
+  p.cont.forEach(c=>{html+=`<div class="ci"><span style="color:#c9d8f0;flex:1">${c[0]}</span><span class="cvs">VS</span><span style="color:#c9a8f0;flex:1">${c[1]}</span></div>`;});
+  html+='</div>';
+  html+=`<div class="ps"><div class="ps-t">🧭 TU PROPÓSITO NATURAL</div><div class="ps-x">${p.prop}</div></div>`;
+  html+=`<div class="ps"><div class="ps-t">🫀 TU BIOLOGÍA</div><div class="ps-x">${p.bio}</div></div>`;
+  document.getElementById('p4c').innerHTML=html;
 }
 
-// Llamar construirSigno también cuando se hace click en Continuar
-const origIr = ir;
-function irAP3() { construirSigno(); ir('p3'); }
+function getPsico(){const out={};for(let area in R){const pregs=PREGUNTAS[area];out[area]=(R[area]||[]).map((sel,i)=>sel!==undefined&&pregs[i]?pregs[i].ops[sel].p:null).filter(Boolean);}return out;}
 
-// ═══════════════════════════════════
-// CONSTRUIR PANTALLA 4: ASTRAL DETALLADO
-// ═══════════════════════════════════
-function construirSignoExtendido() {
-  const s = datosUsuario.signo;
-  document.getElementById('p4signo').textContent = `${s.emoji} ${s.nombre}`;
-  const a = s.astral;
-  const items = [
-    { label:'TEMPERAMENTO', valor: a.temperamento, icono:'🌡' },
-    { label:'CARÁCTER', valor: a.caracter, icono:'🧬' },
-    { label:'AMOR', valor: a.amor, icono:'💖' },
-    { label:'FORTUNA', valor: a.fortuna, icono:'💰' },
-    { label:'LO SOCIAL', valor: a.social, icono:'🤝' },
-    { label:'ASPIRACIONES', valor: a.aspiraciones, icono:'🚀' },
-    { label:'NECESIDADES', valor: a.necesidades, icono:'🧘' },
-    { label:'CONFLICTOS', valor: a.conflictos, icono:'⚡' },
-    { label:'BIOLOGÍA', valor: a.biologia, icono:'🫀' },
-    { label:'CONCEPCIÓN DEL MUNDO', valor: a.mundo, icono:'🌍' }
+function construirP5(){
+  const s=U.signo;const psico=getPsico();let ha='',hp='';
+  s.a10.forEach(item=>{ha+=`<div class="eli"><div class="da"></div><div><span class="el">${item.l}</span><span class="ev">${item.v}</span></div></div>`;});
+  const pDims=[
+    {l:'TEMPERAMENTO',v:(psico.temperamento||['Integrado'])[0]},
+    {l:'CARÁCTER',v:(psico.temperamento||[''])[1]||(psico.temperamento||['Adaptable'])[0]},
+    {l:'EN EL AMOR',v:(psico.amor||['Particular'])[0]},
+    {l:'ESTILO ECONÓMICO',v:(psico.fortuna||['Equilibrado'])[0]},
+    {l:'DINÁMICA SOCIAL',v:(psico.social||['Variable'])[0]},
+    {l:'MOTOR VITAL',v:(psico.aspiraciones||['Múltiple'])[0]},
+    {l:'NECESIDAD CENTRAL',v:(psico.necesidades||['Compleja'])[0]},
+    {l:'GESTIÓN DEL CONFLICTO',v:(psico.conflictos||['Variable'])[0]},
+    {l:'PERFIL EMOCIONAL',v:((psico.amor||[]).concat(psico.necesidades||[])).slice(0,2).join(' + ')||'Sensible'},
+    {l:'VISIÓN DEL MUNDO',v:(psico.mundo||['Abierta'])[0]}
   ];
-  let html = '';
-  items.forEach(item => {
-    html += `<div class="elemento-item">
-      <div class="elemento-dot-astral"></div>
-      <div><span class="elemento-label">${item.icono} ${item.label}</span><span class="elemento-valor">${item.valor}</span></div>
-    </div>`;
-  });
-  document.getElementById('astralDetalles').innerHTML = html;
+  pDims.forEach(item=>{hp+=`<div class="eli"><div class="dp"></div><div><span class="el">${item.l}</span><span class="ev">${item.v}</span></div></div>`;});
+  document.getElementById('p5a').innerHTML=ha;document.getElementById('p5p').innerHTML=hp;
 }
 
-// ═══════════════════════════════════
-// CONSTRUIR PANTALLA 5: ASTROS VS REALIDAD
-// ═══════════════════════════════════
-function obtenerPerfilPsico() {
-  const dimensiones = {
-    temperamento: null, caracter: null, amor: null, fortuna: null,
-    social: null, aspiraciones: null, necesidades: null, conflictos: null, mundo: null
-  };
-  // Mapeamos cada área a dimensiones psicológicas
-  const mapa = {
-    amor: 'amor', fortuna: 'fortuna', temperamento: 'temperamento',
-    conflictos: 'conflictos', necesidades: 'necesidades', social: 'social',
-    aspiraciones: 'aspiraciones', mundo: 'mundo'
-  };
-  const resultado = {};
-  for(let area in respuestas) {
-    const preguntas = PREGUNTAS[area];
-    const resps = respuestas[area] || [];
-    resps.forEach((sel, i) => {
-      if(sel !== undefined && preguntas[i]) {
-        const psico = preguntas[i].opciones[sel].psico;
-        if(!resultado[area]) resultado[area] = [];
-        resultado[area].push(psico);
-      }
-    });
-  }
-  return resultado;
-}
-
-function construirAstralVsPsico() {
-  const s = datosUsuario.signo;
-  const a = s.astral;
-  const psico = obtenerPerfilPsico();
-
-  const astralItems = [
-    { label:'TEMPERAMENTO', valor: a.temperamento },
-    { label:'CARÁCTER', valor: a.caracter },
-    { label:'AMOR', valor: a.amor },
-    { label:'FORTUNA', valor: a.fortuna },
-    { label:'LO SOCIAL', valor: a.social },
-    { label:'ASPIRACIONES', valor: a.aspiraciones },
-    { label:'NECESIDADES', valor: a.necesidades },
-    { label:'CONFLICTOS', valor: a.conflictos },
-    { label:'BIOLOGÍA', valor: a.biologia },
-    { label:'VISIÓN DEL MUNDO', valor: a.mundo }
+function construirP6(){
+  const s=U.signo;const psico=getPsico();const h=HORAS[U.hora]||HORAS.desconocida;
+  const arcos=[
+    {i:'🧬',t:'Tu símbolo y tu conducta dicen lo mismo',x:`El símbolo de ${s.nombre} describe tu temperamento como "${s.a10[0].v.toLowerCase()}". Tu test revela que actúas de forma ${((psico.temperamento||['similar'])[0]).toLowerCase()}. Cuando coinciden, lo que ves es el patrón real — no magia, sino observación convergente de dos sistemas distintos.`},
+    {i:h.e,t:`Nacer en la ${h.l.split('(')[0].trim().toLowerCase()} marca`,x:`${h.d} En tu caso, esto se suma a la energía de ${s.nombre}: no eres solo tu signo, eres tu signo filtrado por el momento en que llegaste al mundo.`},
+    {i:'💖',t:'El amor como espejo del apego',x:`Los astros dicen que ${s.nombre} ${s.a10[2].v.toLowerCase()}. Tus respuestas muestran un estilo de vínculo basado en ${((psico.amor||['tu propia historia'])[0]).toLowerCase()}. La astrología llama "patrón Venus" a lo que la psicología llama "estilo de apego". Mismo fenómeno, dos lenguajes.`},
+    {i:'⚡',t:'La sombra que el cosmos ya sabía',x:`${s.nombre} tiene una contradicción documentada: "${s.p.cont[0][1]}". Tu test confirma una tendencia a ${((psico.conflictos||['gestionar el conflicto a tu manera'])[0]).toLowerCase()}. Reconocer el patrón no es condenarse a él — es el primer paso para elegir diferente.`},
+    {i:'🧭',t:'El propósito que emerge cuando todo coincide',x:`Tu signo apunta a: "${s.p.prop}". Tu motor vital según el test es: ${((psico.aspiraciones||['construir algo propio'])[0]).toLowerCase()}. Cuando el símbolo y la conducta apuntan en la misma dirección, el propósito no se busca — se reconoce.`}
   ];
-
-  const psicoItems = [
-    { label:'TEMPERAMENTO', valor: (psico.temperamento||[]).join(', ') || 'Integrado' },
-    { label:'CARÁCTER', valor: (psico.temperamento||[]).slice(1).join(', ') || 'Adaptable' },
-    { label:'VÍNCULOS', valor: (psico.amor||[]).join(', ') || 'Variado' },
-    { label:'GESTIÓN ECONÓMICA', valor: (psico.fortuna||[]).join(', ') || 'Equilibrado' },
-    { label:'DINÁMICA SOCIAL', valor: (psico.social||[]).join(', ') || 'Flexible' },
-    { label:'MOTOR VITAL', valor: (psico.aspiraciones||[]).join(', ') || 'Multifacético' },
-    { label:'MOTOR INTERNO', valor: (psico.necesidades||[]).join(', ') || 'Complejo' },
-    { label:'GESTIÓN DEL CONFLICTO', valor: (psico.conflictos||[]).join(', ') || 'Variable' },
-    { label:'PERFIL EMOCIONAL', valor: ((psico.amor||[]).concat(psico.necesidades||[])).slice(0,2).join(', ') || 'Sensible' },
-    { label:'CONCEPCIÓN DEL MUNDO', valor: (psico.mundo||[]).join(', ') || 'Abierto' }
-  ];
-
-  let htmlA = '', htmlP = '';
-  astralItems.forEach(item => {
-    htmlA += `<div class="elemento-item"><div class="elemento-dot-astral"></div><div><span class="elemento-label">${item.label}</span><span class="elemento-valor">${item.valor}</span></div></div>`;
-  });
-  psicoItems.forEach(item => {
-    htmlP += `<div class="elemento-item"><div class="elemento-dot-psico"></div><div><span class="elemento-label">${item.label}</span><span class="elemento-valor">${item.valor}</span></div></div>`;
-  });
-  document.getElementById('listaAstralDetalle').innerHTML = htmlA;
-  document.getElementById('listaPsicoDetalle').innerHTML = htmlP;
+  let html=`<div class="reflexivo">"Dos sistemas distintos, una misma búsqueda: entender por qué somos como somos. Lo que el cosmos describe como símbolo, la psicología lo describe como patrón. Ambos son útiles. Ninguno es la verdad completa."</div>`;
+  arcos.forEach(a=>{html+=`<div class="arco"><div class="arco-i">${a.i}</div><div><div class="arco-t">${a.t}</div><div class="arco-x">${a.x}</div></div></div>`;});
+  document.getElementById('p6c').innerHTML=html;
 }
 
-// ═══════════════════════════════════
-// CONSTRUIR PANTALLA 6: CÓMO SE RELACIONAN
-// ═══════════════════════════════════
-function construirConexion() {
-  const s = datosUsuario.signo;
-  const psico = obtenerPerfilPsico();
-  const sexoLabel = datosUsuario.sexo === 'M' ? 'él' : 'ella';
-
-  // Sinergias entre astrología y psicología
-  const arcos = [
-    {
-      icono: '🧬',
-      titulo: 'El origen da forma, no destino',
-      texto: `Los astros dicen que ${s.nombre} nació con una energía de ${s.elemento.toLowerCase()}: ${s.astral.temperamento.toLowerCase()}. Tu perfil psicológico confirma que actúas de forma ${(psico.temperamento||['congruente'])[0].toLowerCase()}. No es coincidencia: el contexto de nacimiento y la biología interactúan con el entorno para crear patrones que se expresan tanto en el símbolo zodiacal como en el comportamiento medible.`
-    },
-    {
-      icono: '💫',
-      titulo: 'La sombra que el cosmos ve',
-      texto: `${s.nombre} carga con un patrón de conflicto bien descrito: "${s.astral.conflictos}". Psicológicamente, tu tendencia ante el conflicto es ${(psico.conflictos||['variable'])[0].toLowerCase()}. Cuando estos dos patrones se alinean, el comportamiento se vuelve predecible. Cuando divergen, estás en crecimiento.`
-    },
-    {
-      icono: '🌀',
-      titulo: 'Lo que buscas sin saberlo',
-      texto: `La astrología dice que tu mayor necesidad es ${s.astral.necesidades.toLowerCase()}. Tu respuesta psicológica revela que te recargas siendo ${(psico.necesidades||['auténtico/a'])[0].toLowerCase()}. Esa distancia entre lo que el cosmos percibe y lo que tú eliges conscientemente es el espacio donde se produce tu evolución personal.`
-    },
-    {
-      icono: '🔗',
-      titulo: 'El vínculo como espejo',
-      texto: `En el amor, ${s.nombre} tiende a ${s.astral.amor.toLowerCase()}. Tu perfil de vínculos indica una tendencia hacia el estilo ${(psico.amor||['único'])[0].toLowerCase()}. La astrología y la psicología del apego describen el mismo fenómeno con distintos vocabularios: cómo conectamos con el otro es cómo conectamos con nosotros mismos.`
-    },
-    {
-      icono: '🌟',
-      titulo: 'La visión del mundo como brújula',
-      texto: `Tu signo percibe el mundo como: "${s.astral.mundo}". Tu evaluación psicológica muestra una concepción basada en ${(psico.mundo||['tu propia experiencia'])[0].toLowerCase()}. Esa cosmología personal —donde se cruzan el símbolo y la vivencia— es lo que determina tus decisiones reales, mucho más que cualquier consejo externo.`
-    }
-  ];
-
-  let html = `<div class="reflexivo">"Dos sistemas nacidos de la observación humana. Uno mira hacia el cielo; el otro, hacia adentro. Ambos buscan lo mismo: entender por qué somos como somos."</div>`;
-  html += `<div class="sincronias-titulo">◆ LOS PUNTOS DE SINCRONÍA ◆</div>`;
-  arcos.forEach(a => {
-    html += `<div class="arco-item"><div class="arco-icono">${a.icono}</div><div><div class="arco-titulo">${a.titulo}</div><div class="arco-texto">${a.texto}</div></div></div>`;
-  });
-  document.getElementById('conexionContenido').innerHTML = html;
+function construirP7(){
+  const s=U.signo;const psico=getPsico();const h=HORAS[U.hora]||HORAS.desconocida;
+  const sexoLabel=U.sexo==='M'?'un hombre':'una mujer';
+  const todosRasgos=[...new Set(Object.values(psico).flat().filter(Boolean))].slice(0,10);
+  const top3=todosRasgos.slice(0,3).join(', ')||'complejo y único';
+  const html=`
+    <div class="ps"><div class="ps-t">⚡ QUIÉN ERES</div><div class="ps-x">Eres ${sexoLabel} con la energía de <strong style="color:#ffd966">${s.emoji} ${s.nombre}</strong> (${s.elemento}, regido por ${s.planeta}), nacido en ${h.l.split('(')[0].trim().toLowerCase()}. Llevas en ti una mezcla de lo que el cosmos inscribió en el momento de tu llegada y lo que la vida fue construyendo a través de tus experiencias, vínculos y decisiones.</div></div>
+    <div class="ps"><div class="ps-t">🧠 TU PERFIL PSICOLÓGICO REAL</div><div class="ps-x">Tus respuestas revelan tendencias hacia: <strong style="color:#c9a8f0">${top3}</strong>. En los vínculos tu estilo es <strong>${(psico.amor||['particular'])[0].toLowerCase()}</strong>, y en el mundo operas desde una base de <strong>${(psico.mundo||['tu propia experiencia'])[0].toLowerCase()}</strong>.</div><div class="tw">${todosRasgos.map(r=>`<span class="tag">${r}</span>`).join('')}</div></div>
+    <div class="ps"><div class="ps-t">💪 LO QUE TE HACE QUIEN ERES</div><div class="ps-x">${s.esencia.split('.')[0]}. Tu perfil conductual confirma y matiza lo que los astros describen. No eres tu signo. No eres solo tus patrones. Eres la suma de todo eso más las decisiones que sigues tomando cada día.</div></div>
+    <div class="ps"><div class="ps-t">⚠️ TU PUNTO CIEGO MÁS IMPORTANTE</div><div class="ps-x">${s.p.cont[0][0]} — pero ${s.p.cont[0][1].toLowerCase()}. Ese espacio entre lo que quieres y lo que haces es donde está el trabajo real. No como problema: como oportunidad.</div></div>
+    <div class="reflexivo">"No eres tu signo. No eres tus respuestas. Eres el que puede leer todo esto y decidir qué hacer con ello."</div>`;
+  document.getElementById('p7c').innerHTML=html;
 }
 
-// ═══════════════════════════════════
-// CONSTRUIR PANTALLA 7: PERFIL INTEGRADOR
-// ═══════════════════════════════════
-function construirPerfil() {
-  const s = datosUsuario.signo;
-  const psico = obtenerPerfilPsico();
-  const sexoLabel = datosUsuario.sexo === 'M' ? 'un hombre' : 'una mujer';
-  const todosRasgos = Object.values(psico).flat().filter(Boolean);
-  const rasgosUnicos = [...new Set(todosRasgos)].slice(0, 8);
-
-  const html = `
-    <div class="perfil-bloque">
-      <div class="perfil-bloque-titulo">⚡ QUIÉN ERES</div>
-      <div class="perfil-bloque-texto">
-        Eres ${sexoLabel} con la energía de <strong style="color:#ffd966">${s.emoji} ${s.nombre}</strong>, elemento ${s.elemento}, regido por ${s.planeta}. Llevas en tu constitución una mezcla de lo que el cosmos inscribió en el momento de tu llegada al mundo y lo que la vida fue moldeando a través de tus experiencias, decisiones y vínculos.
-      </div>
-    </div>
-    <div class="perfil-bloque">
-      <div class="perfil-bloque-titulo">🧠 TU PERFIL PSICOLÓGICO</div>
-      <div class="perfil-bloque-texto">
-        Tus respuestas revelan a una persona con tendencias hacia: <strong style="color:#c9a8f0">${rasgosUnicos.slice(0,3).join(', ')}</strong>. En los vínculos tiendes al estilo <strong>${(psico.amor||['singular'])[0]}</strong>, y en el mundo operas desde una base de <strong>${(psico.mundo||['tu propia visión'])[0].toLowerCase()}</strong>.
-      </div>
-      <div class="perfil-rasgos">
-        ${rasgosUnicos.map(r => `<span class="rasgo-tag">${r}</span>`).join('')}
-      </div>
-    </div>
-    <div class="perfil-bloque">
-      <div class="perfil-bloque-titulo">🌌 LO QUE EL 2026 TE PIDE</div>
-      <div class="perfil-bloque-texto">
-        ${s.prediccion2026.split('.')[0]}. Tu perfil psicológico sugiere que el mayor trabajo de este año no está afuera: está en alinear lo que deseas con lo que realmente eliges. Cuando el símbolo y la conducta apuntan en la misma dirección, la vida fluye. Cuando divergen, ahí está el crecimiento.
-      </div>
-    </div>
-    <div class="reflexivo" style="margin-top:20px;">"No eres tu signo. No eres solo tu psicología. Eres la suma de todo lo que ha pasado por ti y la voluntad de decidir qué haces con eso."</div>
-  `;
-  document.getElementById('perfilContenido').innerHTML = html;
-}
-
-// ═══════════════════════════════════
-// REINICIAR
-// ═══════════════════════════════════
-function reiniciar() {
-  respuestas = {};
-  esferasRespondidas = { amor:false, fortuna:false, temperamento:false, conflictos:false, necesidades:false, social:false, aspiraciones:false, mundo:false };
-  esferaActual = '';
-  datosUsuario = { dia:null, mes:null, sexo:'', signo:null };
-  document.getElementById('diaNac').value = '';
-  document.getElementById('mesNac').value = '';
-  document.getElementById('sexo').value = '';
+function reiniciar(){
+  R={};HECHO={amor:false,fortuna:false,temperamento:false,conflictos:false,necesidades:false,social:false,aspiraciones:false,mundo:false};AREA='';
+  U={dia:null,mes:null,hora:'',pais:'',sexo:'',signo:null};
+  const dEl=document.getElementById('dia');if(dEl)dEl.value='';
+  ['mes','hora','pais','sexo'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   ir('p1');
 }
-
-// Inicializar steps al cargar
-actualizarSteps('p1');
+rSteps('p1');
 </script>
 </body>
 </html>
